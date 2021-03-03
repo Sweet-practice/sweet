@@ -17,11 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+// ユーザー側
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('sweets', 'SweetController')->only(['index', 'show']);
 
 Route::group(['middleware' => 'auth:user'], function() {
-    Route::get('/home', 'HomeController@index')->name('home');
+  Route::resource('favorites', 'FavoriteController')->only(['index']);
+  Route::resource('carts', 'CartController')->only(['index']);
+  Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
+  Route::resource('rooms', 'RoomController')->only(['show']);
+  Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
 });
+
+
+// お店側
 
 Route::group(['prefix' => 'shop'], function() {
     Route::get('/',         function () { return redirect('/shop/home'); });
@@ -32,4 +42,8 @@ Route::group(['prefix' => 'shop'], function() {
 Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::post('logout',   'Shop\LoginController@logout')->name('shop.logout');
     Route::get('home',      'Shop\HomeController@index')->name('shop.home');
+    Route::resource('categories', 'Shop\CategoryController');
+    Route::resource('sweets', 'Shop\SweetController');
+    Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
+    Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create']);
 });
