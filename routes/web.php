@@ -23,11 +23,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('sweets', 'SweetController')->only(['index', 'show']);
 
 Route::group(['middleware' => 'auth:user'], function() {
-  Route::resource('favorites', 'FavoriteController')->only(['index']);
-  Route::resource('carts', 'CartController')->only(['index']);
-  Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
-  Route::resource('rooms', 'RoomController')->only(['show']);
-  Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
+    Route::get('/home/edit', 'HomeController@edit')->name('edit');
+    Route::post('/home/edit', 'HomeController@update')->name('update');
+    Route::resource('favorites', 'FavoriteController')->only(['index']);
+    Route::resource('carts', 'CartController')->only(['index']);
+    Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
+    Route::resource('rooms', 'RoomController')->only(['show']);
+    Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
 });
 
 

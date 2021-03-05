@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>〇〇お菓子店</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -18,13 +18,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>.navbar{background-color: #FF9999;}</style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/sweets') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    〇〇お菓子店
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -41,19 +42,16 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('新規登録') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">{{ __('HOME画面') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('お気に入り一覧') }}</a>
+                                <a class="nav-link" href="{{ route('home') }}">{{ __('マイページ') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">{{ __('購入履歴') }}</a>
@@ -67,7 +65,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('edit') }}">
                                         {{ __('登録内容編集') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
