@@ -13,7 +13,7 @@ class SweetController extends Controller
      */
     public function index()
     {
-        //
+        return view('sweet');
     }
 
     /**
