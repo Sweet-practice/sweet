@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Category;
+use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,21 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+      $categories = Category::all();
+      return view('shop/categories.index', ['categories' => $categories]);
+    }
+
+    public function store(CategoryRequest $request){
+        $input = $request->all();
+        DB::transaction(function () use ($request, $input) {
+          try{
+            Category::create($input);
+          } catch(\Throwable $e){
+            \DB::rollback();
+            abort(500);
+          }
+        });
+        return redirect(route('categories.index'));
     }
 
     /**
@@ -24,26 +41,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+      return view('shop/categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Category;
 
 class SweetController extends Controller
 {
@@ -24,7 +25,8 @@ class SweetController extends Controller
      */
     public function create()
     {
-        //
+      $categories = Category::all();
+      return view('shop/sweets.create', ['categories' => $categories]);
     }
 
     /**
