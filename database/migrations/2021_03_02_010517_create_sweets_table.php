@@ -24,7 +24,7 @@ class CreateSweetsTable extends Migration
             $table->string('introduction');
             $table->integer('price');
             $table->string('allergy');
-            $table->string('main_image');
+            $table->string('main_image')->nullable()->change();
             $table->timestamps();
 
             //外部キー設定
