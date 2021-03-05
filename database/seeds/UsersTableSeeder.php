@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use Faker\Factory as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -22,5 +24,7 @@ class UsersTableSeeder extends Seeder
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s'),
         ]);
+
+        factory(User::class, 10)->create();
     }
 }

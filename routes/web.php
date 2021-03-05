@@ -40,8 +40,10 @@ Route::group(['prefix' => 'shop'], function() {
 });
 
 Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
-    Route::post('logout',   'Shop\LoginController@logout')->name('shop.logout');
-    Route::get('home',      'Shop\HomeController@index')->name('shop.home');
+    Route::get('search', 'Shop\HomeController@search')->name('shop.search');
+    Route::post('logout', 'Shop\LoginController@logout')->name('shop.logout');
+    Route::get('home', 'Shop\HomeController@index')->name('shop.home');
+    Route::resource('users', 'Shop\UserController')->only(['show', 'update']);
     Route::resource('categories', 'Shop\CategoryController');
     Route::resource('sweets', 'Shop\SweetController');
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
