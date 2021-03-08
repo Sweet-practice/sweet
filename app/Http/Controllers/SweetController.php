@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Sweet;
+use App\Category;
 
 class SweetController extends Controller
 {
@@ -13,7 +15,7 @@ class SweetController extends Controller
      */
     public function index()
     {
-        //
+        return view('sweet');
     }
 
     /**
@@ -43,9 +45,10 @@ class SweetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Sweet $sweet)
     {
-        //
+        $category  = \App\Category::find($sweet->category_id);
+        return view('sweet_show',['sweet' => $sweet, 'category' => $category]);
     }
 
     /**
@@ -80,5 +83,11 @@ class SweetController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request){
+        $name = $request['name'];
+        $search = Sweet::select('id', 'name')->where('name', 'like', '%'.$name.'%')->get();
+        return view('search', ['search' => $search, 'name' => $name]);
     }
 }

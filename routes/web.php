@@ -20,14 +20,18 @@ Auth::routes();
 // ユーザー側
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('sweets', 'SweetController')->only(['index', 'show']);
+Route::resource('sweets', 'SweetController',['names' => ['index' => 'index','show' => 'show']])->only(['index', 'show']);
+Route::post('sweets', 'SweetController@search')->name('search');
 
 Route::group(['middleware' => 'auth:user'], function() {
-  Route::resource('favorites', 'FavoriteController')->only(['index']);
-  Route::resource('carts', 'CartController')->only(['index']);
-  Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
-  Route::resource('rooms', 'RoomController')->only(['show']);
-  Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
+    Route::get('/home/edit', 'HomeController@edit')->name('edit');
+    Route::post('/home/edit', 'HomeController@update')->name('update');
+    Route::resource('favorites', 'FavoriteController')->only(['index']);
+    Route::resource('carts', 'CartController')->only(['index']);
+    Route::post('carts', 'CartController@create')->name('carts.create');
+    Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
+    Route::resource('rooms', 'RoomController')->only(['show']);
+    Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
 });
 
 
@@ -40,8 +44,10 @@ Route::group(['prefix' => 'shop'], function() {
 });
 
 Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
-    Route::post('logout',   'Shop\LoginController@logout')->name('shop.logout');
-    Route::get('home',      'Shop\HomeController@index')->name('shop.home');
+    Route::get('search', 'Shop\HomeController@search')->name('shop.search');
+    Route::post('logout', 'Shop\LoginController@logout')->name('shop.logout');
+    Route::get('home', 'Shop\HomeController@index')->name('shop.home');
+    Route::resource('users', 'Shop\UserController')->only(['show', 'update']);
     Route::resource('categories', 'Shop\CategoryController');
     Route::resource('sweets', 'Shop\SweetController');
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
