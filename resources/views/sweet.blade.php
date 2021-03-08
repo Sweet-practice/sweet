@@ -5,8 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="text-right">
-                <form action="" method="post" id="search">
-                    <input type="text">
+                <form action="{{ route('search') }}" method="post" id="search">
+                @csrf
+                    <input type="text" name="name">
                     <button type="submit">検索</button>
                 </form>
             </div>
@@ -25,7 +26,7 @@
 
         <div class="col-md-12 mt-3 p-5">
             <h2>売れ筋TOP5</h2>
-            <div class="d-flex justify-content-between flex-wrap">
+            <div class="row justify-content-between">
                 <div class="m-1" style="width:150px">
                     <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
                     <a href="#"><h5>商品名</h5></a>
@@ -56,7 +57,7 @@
 
         <div class="col-md-12 mt-3 p-5">
             <h2>お気に入り数TOP5</h2>
-            <div class="d-flex justify-content-between flex-wrap">
+            <div class="row justify-content-between">
                     <div class="m-1" style="width:150px">
                         <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
                         <a href="#"><h5>商品名</h5></a>
@@ -87,7 +88,7 @@
 
         <div class="col-md-12 mt-3 p-5">
             <h2>カテゴリー一覧</h2>
-            <div class="d-flex justify-content-between flex-wrap">
+            <div class="row justify-content-between">
                 <div class="col-md-4 mt-1 mb-1">
                     <a href="#" class="h5">-ケーキ</a>
                 </div>
