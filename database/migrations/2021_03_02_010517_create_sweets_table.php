@@ -18,13 +18,13 @@ class CreateSweetsTable extends Migration
         Schema::create('sweets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('category_id');
+            $table->integer('category_id')->unsigned();
             $table->integer('stock');
             $table->enum('status', SweetStatus::getKeys());
             $table->string('introduction');
             $table->integer('price');
             $table->string('allergy');
-            $table->string('main_image')->nullable()->change();
+            $table->string('path');
             $table->timestamps();
 
             //外部キー設定
