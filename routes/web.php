@@ -20,13 +20,15 @@ Auth::routes();
 // ユーザー側
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('sweets', 'SweetController')->only(['index', 'show']);
+Route::resource('sweets', 'SweetController',['names' => ['index' => 'index','show' => 'show']])->only(['index', 'show']);
+Route::post('sweets', 'SweetController@search')->name('search');
 
 Route::group(['middleware' => 'auth:user'], function() {
     Route::get('/home/edit', 'HomeController@edit')->name('edit');
     Route::post('/home/edit', 'HomeController@update')->name('update');
     Route::resource('favorites', 'FavoriteController')->only(['index']);
     Route::resource('carts', 'CartController')->only(['index']);
+    Route::post('carts', 'CartController@create')->name('carts.create');
     Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
     Route::resource('rooms', 'RoomController')->only(['show']);
     Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
