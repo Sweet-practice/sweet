@@ -43,7 +43,6 @@ class SweetController extends Controller
      */
     public function store(SweetRequest $request)
     {
-      $sub_images = $request->file('sub_image');
       //S3へのファイルアップロード処理の時の情報を変数$upload_infoに格納する
       $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
       //S3へのファイルアップロード処理の時の情報が格納された変数$pathを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
@@ -57,6 +56,8 @@ class SweetController extends Controller
       $input->allergy = $request->allergy;
       $input->path = $path;
       $input->save();
+
+      $sub_images = $request->file('sub_image');
 
       foreach($sub_images as $sub_image){
         $sub = Storage::disk('s3')->putFile('/sub', $sub_image, 'public');
@@ -78,8 +79,6 @@ class SweetController extends Controller
     public function show($id)
     {
       $sweet = Sweet::find($id);
-      // $sub_images = Image::where('sweet_id', $id)->all();
-      // dd($sub_images);
       return view('shop/sweets.show', ['sweet' => $sweet]);
     }
 
@@ -91,7 +90,9 @@ class SweetController extends Controller
      */
     public function edit($id)
     {
-        //
+      $sweet = Sweet::find($id);
+      $categories = Category::all();
+      return view('shop/sweets.edit', ['sweet' => $sweet, 'categories' => $categories]);
     }
 
     /**
@@ -101,9 +102,42 @@ class SweetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SweetRequest $request)
     {
-        //
+      $sweet = Sweet::find($request->id);
+      $old_path = basename($sweet->path);
+      if(!empty($request->file)){
+        Storage::disk('s3')->delete('test/'.$old_path);
+        $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
+        $path = Storage::disk('s3')->url($upload_info);
+      }
+      // $sub_images = $request->file('sub_image');
+      //S3へのファイルアップロード処理の時の情報を変数$upload_infoに格納する
+      // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
+      //S3へのファイルアップロード処理の時の情報が格納された変数$pathを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
+      // $path = Storage::disk('s3')->url($upload_info);
+      $input = Sweet::find($request->id);
+      $input->name = $request->name;
+      $input->category_id = $request->category_id;
+      $input->stock = $request->stock;
+      $input->introduction = $request->introduction;
+      $input->price = $request->price;
+      $input->allergy = $request->allergy;
+      $input->path = $path;
+      $input->save();
+
+      $sub_images = $request->file('sub_image');
+      $sub_oldimage = $sweet->images;
+      $images = Image::find($request->id);
+
+      foreach($sub_images as $key => $sub_image){
+        Storage::disk('s3')->delete('test/'.$sub_oldimage[$key]);
+        $sub = Storage::disk('s3')->putFile('/sub', $sub_image, 'public');
+        $sub_path = Storage::disk('s3')->url($sub);
+        $image->url = $sub_path[$key];
+        $image->save();
+      }
+        return redirect(route('shop.home'));
     }
 
     /**

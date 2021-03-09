@@ -40,7 +40,7 @@ class HomeController extends Controller
         return view('shop.search', ['search' => $search, 'value' => $value, 'name' => $name]);
       }
       if($value === 'お菓子'){
-        $search = Sweet::select('id', 'name')->where('name', 'like', '%'.$name.'%')->get();
+        $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
         return view('shop.search', ['search' => $search, 'value' => $value, 'name' => $name]);
       }
     }
