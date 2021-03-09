@@ -18,9 +18,9 @@
 			</div>
 		@endif
 		@foreach ($search as $sweet)
-			<div class="m-3 d-flex justify-content-between flex-wrap">
+			<div class="m-3 row">
 				<a href="{{ route('show', ['sweet' => $sweet->id]) }}" class="">
-					<img src="image/sweet1.jpeg" alt="画像">
+					<img src="{{ $sweet->path }}" alt="画像">
 					<p class="text-center">{{ $sweet->name }}</p>
 				</a>
 			</div>

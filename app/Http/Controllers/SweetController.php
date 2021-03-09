@@ -87,7 +87,7 @@ class SweetController extends Controller
 
     public function search(Request $request){
         $name = $request['name'];
-        $search = Sweet::select('id', 'name')->where('name', 'like', '%'.$name.'%')->get();
+        $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
         return view('search', ['search' => $search, 'name' => $name]);
     }
 }

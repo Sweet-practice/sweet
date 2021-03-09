@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Cart;
+use App\Sweet;
 
 class CartController extends Controller
 {
@@ -14,7 +16,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('cart_index');
+        $carts = Cart::where('user_id',Auth::user()->id)->get();
+        return view('cart_index',['carts' => $carts]);
     }
 
     /**
@@ -80,8 +83,11 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $cart = Cart::find($id);
+        $cart->delete();
+        $carts = Cart::where('user_id',Auth::user()->id)->get();
+        return view('cart_index',['carts' => $carts]);
     }
 }
