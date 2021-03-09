@@ -9,7 +9,7 @@
 
         <div class="col-md-12 mt-3 p-5">
             <div class="row">
-                <img src="../image/cake1.jpeg" class="mx-auto" alt="お気に入り">
+                <img src="{{ $sweet->path }}" class="mx-auto" alt="お気に入り">
             </div>
             <table class="table mt-5 mx-auto" style="width:80%">
                 <tr>
@@ -51,7 +51,7 @@
             </table>
             <form action="{{ route('carts.create') }}" method="post" id="cart" class="mt-5 text-right">
             @csrf
-                <input type="number" name="amout" value="1" min="0" style="width:60px">
+                <input type="number" name="amout" value="1" min="1" style="width:60px">
                 @if(Auth::user())
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                 @endif
