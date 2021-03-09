@@ -26,7 +26,8 @@
 		@if($value === 'お菓子')
 			@foreach ($search as $sweet)
 			  <div class="shop mx-3 mb-5">
-			    <a href="{{ route('sweets.show', ['sweet' => $sweet->id]) }}" class="btn btn-primary"><p>{{ $sweet->name }}</p></a>
+			  	<img src="{{ $sweet->path }}">
+			      <a href="{{ route('sweets.show', ['sweet' => $sweet->id]) }}" class="btn btn-primary"><p>{{ $sweet->name }}</p></a>
 			  </div>
 			@endforeach
 		@endif
