@@ -18,14 +18,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('sweet_id');
             $table->enum('status', OrderStatus::getKeys());
             $table->integer('postage');
             $table->integer('total_price');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('sweet_id')->references('id')->on('sweets');
         });
     }
 

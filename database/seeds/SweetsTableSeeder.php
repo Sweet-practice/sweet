@@ -21,6 +21,9 @@ class SweetsTableSeeder extends Seeder
         'introduction' => 'アイスです。aisudesu.',
         'price' => '200',
         'allergy' => 'アレルギー',
+        'path' => 'path',
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s'),
         ]);
     }
 }
