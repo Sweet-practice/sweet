@@ -10,8 +10,22 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class PublishState extends Enum
+final class PublishState extends Enum implements LocalizedEnum
 {
-    const activeUser = 0;
-    const deleteUser = 1;
+  const activeUser = 0;
+  const deleteUser = 1;
+
+  public static function getDescription($value): string
+  {
+    switch ($value){
+      case 'activeUser':
+        return '会員';
+        brake;
+      case 'deleteUser':
+        return '退会済み';
+        brake;
+      default:
+        return self::getKey($value);
+    }
+  }
 }

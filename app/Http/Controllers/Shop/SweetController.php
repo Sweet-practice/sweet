@@ -111,31 +111,40 @@ class SweetController extends Controller
         $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
         $path = Storage::disk('s3')->url($upload_info);
       }
-      // $sub_images = $request->file('sub_image');
-      //S3へのファイルアップロード処理の時の情報を変数$upload_infoに格納する
-      // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
-      //S3へのファイルアップロード処理の時の情報が格納された変数$pathを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-      // $path = Storage::disk('s3')->url($upload_info);
-      $input = Sweet::find($request->id);
-      $input->name = $request->name;
-      $input->category_id = $request->category_id;
-      $input->stock = $request->stock;
-      $input->introduction = $request->introduction;
-      $input->price = $request->price;
-      $input->allergy = $request->allergy;
-      $input->path = $path;
-      $input->save();
+
+      $sweet->name = $request->name;
+      $sweet->category_id = $request->category_id;
+      $sweet->stock = $request->stock;
+      $sweet->introduction = $request->introduction;
+      $sweet->price = $request->price;
+      $sweet->allergy = $request->allergy;
+      if(isset($path)){
+        $sweet->path = $path;
+      }elseif(empty($path)){
+        $sweet->path = $sweet->path;
+      }
+      $sweet->save();
 
       $sub_images = $request->file('sub_image');
       $sub_oldimage = $sweet->images;
-      $images = Image::find($request->id);
+      $images = Image::where('sweet_id', $request->id)->get();
+      $count = count($sub_oldimage);
+      if($count >= 1){
+        for($i = $count - 1; $i >= 0; $i--){
+          Storage::disk('s3')->delete('sub/'.basename($sub_oldimage[$i]->url));
+          $images[$i]->delete();
+        }
+      }
 
-      foreach($sub_images as $key => $sub_image){
-        Storage::disk('s3')->delete('test/'.$sub_oldimage[$key]);
-        $sub = Storage::disk('s3')->putFile('/sub', $sub_image, 'public');
-        $sub_path = Storage::disk('s3')->url($sub);
-        $image->url = $sub_path[$key];
-        $image->save();
+      if(!is_null($sub_images)){
+        foreach($sub_images as $sub_image){
+          $sub = Storage::disk('s3')->putFile('/sub', $sub_image, 'public');
+          $sub_path = Storage::disk('s3')->url($sub);
+          $image = new Image();
+          $image->sweet_id = $request->id;
+          $image->url = $sub_path;
+          $image->save();
+        }
       }
         return redirect(route('shop.home'));
     }
