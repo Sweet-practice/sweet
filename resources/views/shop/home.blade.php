@@ -21,7 +21,7 @@
                       <select class="form-control col-md-5" name="value">
                         <option selected value="ユーザー">ユーザー</option>
                         <option selected value="お菓子">お菓子</option>
-                        </select>
+                      </select>
 
                         <button type="submit" class="btn btn-primary col-md-5">検索</button>
                     </form>
@@ -30,7 +30,7 @@
                   <div class="topic col-4 offset-4">
                     <div style="text-align: center">
                       本日の注文件数
-                      <?php echo count($order) ?>件
+                      <a href="{{ route('orders.index', 'Untreated') }}"><?php echo count($order) ?>件</a>
                     </div>
 
                     <div style="text-align: center">

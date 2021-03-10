@@ -13,17 +13,19 @@ class SweetsTableSeeder extends Seeder
      */
     public function run()
     {
+      for($i = 1; $i <= 11; $i++){
         DB::table('sweets')->insert([
-        'name' => 'パピコ',
-        'category_id' => '1',
-        'stock' => '20',
-        'status' => '1',
-        'introduction' => 'アイスです。aisudesu.',
-        'price' => '200',
-        'allergy' => 'アレルギー',
-        'path' => 'path',
-        'created_at' => date('Y-m-d H:i:s'),
-        'updated_at' => date('Y-m-d H:i:s'),
+          'name' => 'パピコ'.$i,
+          'category_id' => '1',
+          'stock' => '20',
+          'status' => '1',
+          'introduction' => 'アイスです。aisudesu.',
+          'price' => '200',
+          'allergy' => 'アレルギー',
+          'path' => 'path',
+          'created_at' => date('Y-m-d H:i:s'),
+          'updated_at' => date('Y-m-d H:i:s'),
         ]);
+      }
     }
 }

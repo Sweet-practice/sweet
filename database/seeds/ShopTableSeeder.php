@@ -22,6 +22,6 @@ class ShopTableSeeder extends Seeder
             'holiday' => '火曜日',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            ]);
+        ]);
     }
 }
