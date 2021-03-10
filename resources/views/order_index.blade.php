@@ -14,7 +14,7 @@
                         <p style="font-size:20px">{{ $order->id }}</p>
                     </a>
                     <div class="w-25">
-                    @foreach ($order->order_detail as $order_d)
+                    @foreach ($order->order_details as $order_d)
                         <div class="row ml-3">
                         <p style="font-size:18px">{{ $order_d->sweet_name }}</p>
                         <p>　{{ $order_d->amout }}個</p>
