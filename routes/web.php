@@ -46,6 +46,7 @@ Route::group(['prefix' => 'shop'], function() {
 
 Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::get('search', 'Shop\HomeController@search')->name('shop.search');
+    Route::get('/orders/{status}', 'Shop\OrderController@index')->name('orders.index');
     Route::post('logout', 'Shop\LoginController@logout')->name('shop.logout');
     Route::get('home', 'Shop\HomeController@index')->name('shop.home');
     Route::resource('users', 'Shop\UserController')->only(['show', 'update']);
@@ -53,4 +54,6 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('sweets', 'Shop\SweetController');
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
     Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create']);
+    Route::resource('orders', 'Shop\OrderController')->only(['update']);
+    Route::resource('order_details', 'Shop\OrderDetailController')->only(['show']);
 });

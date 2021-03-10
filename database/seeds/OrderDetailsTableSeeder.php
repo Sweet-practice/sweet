@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Order;
-use Faker\Factory as Faker;
+use App\OrderDetails;
 
-class OrdersTableSeeder extends Seeder
+class OrderDetailsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +13,12 @@ class OrdersTableSeeder extends Seeder
     public function run()
     {
       for($i = 1; $i <= 11; $i++){
-        DB::table('orders')->insert([
-        'user_id' => $i,
-        'status' => '1',
-        'postage' => '540',
-        'total_price' => '990'.$i,
+        DB::table('order_details')->insert([
+        'order_id' => $i,
+        'sweet_id' => $i,
+        'sweet_name' => 'お菓子'.$i,
+        'amout' => '1',
+        'price' => '56'.$i,
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s'),
         ]);
