@@ -8,6 +8,7 @@ use App\Order;
 use App\Message;
 use App\User;
 use App\Sweet;
+use App\Enums\PublishStatus;
 
 class UserController extends Controller
 {
@@ -28,17 +29,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,6 +37,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $user = User::find($id);
+      $user->delete_flug = 'deleteUser';
+      $user->save();
+
+      return redirect(route('shop.home'));
     }
 }

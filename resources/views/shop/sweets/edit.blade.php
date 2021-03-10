@@ -10,8 +10,6 @@
       	@foreach($categories as $category)
           @if($category->id === $sweet->category_id)
       	    <option value="{{ $category->id }}">{{ $category->name }}</option>
-          @else
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
           @endif
       	@endforeach
       </select>
