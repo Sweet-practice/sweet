@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::resource('carts', 'CartController')->only(['index']);
     Route::post('carts', 'CartController@create')->name('carts.create');
     Route::delete('carts/{id}', 'CartController@destroy')->name('carts.destroy');
-    Route::resource('orders', 'OrderController')->only(['index', 'create', 'show']);
+    Route::resource('orders', 'OrderController')->only(['index', 'create', 'store', 'show']);
     Route::resource('rooms', 'RoomController')->only(['show']);
     Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
 });
