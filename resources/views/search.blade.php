@@ -3,10 +3,13 @@
 @section('content')
 
 <div class="container mt-3">
-	@if(isset($name))
+	@if(isset($name) && isset($id))
+		<h3>{{ $name }} の一覧</h3>
+		<h4><?php echo count($search) ?> 件</h4>
+	@elseif(isset($name))
 		<h3>{{ $name }} の検索結果</h3>
 		<h4><?php echo count($search) ?> 件</h4>
-	@else(empty($name))
+	@else
 	  <h3>全件検索結果</h3>
 	  <h4><?php echo count($search) ?> 件</h4>
 	@endif

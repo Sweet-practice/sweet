@@ -89,24 +89,16 @@
         <div class="col-md-12 mt-3 p-5">
             <h2>カテゴリー一覧</h2>
             <div class="row justify-content-between">
+                @foreach($categorys as $category)
                 <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-ケーキ</a>
+                    <a href="javascript:document.getElementById('a-post{{ $category->id }}').submit()" class="h5">-{{ $category->name }}</a>
+                    <form action="{{ route('search') }}" method="post" id="a-post{{ $category->id }}">
+                    @csrf
+                        <input type="hidden" name="category" value="{{ $category->id }}">
+                        <input type="hidden" name="category_name" value="{{ $category->name }}">
+                    </form>
                 </div>
-                <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-焼き菓子</a>
-                </div>
-                <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-洋菓子</a>
-                </div>
-                <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-和菓子</a>
-                </div>
-                <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-チョコレート</a>
-                </div>
-                <div class="col-md-4 mt-1 mb-1">
-                    <a href="#" class="h5">-アイス</a>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

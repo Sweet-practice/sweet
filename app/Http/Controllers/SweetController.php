@@ -15,7 +15,8 @@ class SweetController extends Controller
      */
     public function index()
     {
-        return view('sweet');
+        $categorys  = Category::all();
+        return view('sweet', ['categorys' => $categorys]);
     }
 
     /**
@@ -86,8 +87,16 @@ class SweetController extends Controller
     }
 
     public function search(Request $request){
-        $name = $request['name'];
-        $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
-        return view('search', ['search' => $search, 'name' => $name]);
+        if(isset($request['name'])){
+            $name = $request['name'];
+            $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
+            return view('search', ['search' => $search, 'name' => $name]);
+        }
+        elseif(isset($request['category'])){
+            $id = $request['category'];
+            $name = $request['category_name'];
+            $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->get();
+            return view('search', ['search' => $search, 'name' => $name, 'id' => $id]);
+        }
     }
 }
