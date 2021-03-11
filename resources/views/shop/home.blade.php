@@ -30,7 +30,7 @@
                   <div class="topic col-4 offset-4">
                     <div style="text-align: center">
                       本日の注文件数
-                      <a href="{{ route('orders.index', 'Untreated') }}"><?php echo count($order) ?>件</a>
+                      <a href="{{ route('orders.index', 'today') }}"><?php echo count($order) ?>件</a>
                     </div>
 
                     <div style="text-align: center">

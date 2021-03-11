@@ -1,0 +1,20 @@
+h3 {
+	text-align: center;
+}
+.top{
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+	margin-bottom: 0px;
+}
+.table {
+	width: 80%;
+	display: table;
+	margin: 0 auto;
+	border-bottom: 1px solid white;
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+}
+.table th, .table td {
+  border: 0px none !important;
+}

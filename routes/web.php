@@ -56,5 +56,5 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
     Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create']);
     Route::resource('orders', 'Shop\OrderController')->only(['update']);
-    Route::resource('order_details', 'Shop\OrderDetailController')->only(['show']);
+    Route::resource('order_details', 'Shop\OrderDetailController')->only(['show', 'edit']);
 });

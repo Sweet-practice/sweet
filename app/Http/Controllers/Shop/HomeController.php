@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Order;
 use App\Message;
 use App\User;
@@ -27,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $order = Order::select('id')->get();
+      $order = Order::select('id')->whereDate('created_at', Carbon::today())->get();
       $message = Message::get();
       return view('shop.home', ['order' => $order, 'message' => $message]);
     }
