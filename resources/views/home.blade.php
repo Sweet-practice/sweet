@@ -5,6 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h2>{{ Auth::user()->name }} さんのマイページ</h2>
+            <div class="text-right">
+                <form action="{{ route('search') }}" method="post" id="search">
+                @csrf
+                    <input type="text" name="name" placeholder="商品名検索">
+                    <button type="submit">検索</button>
+                </form>
+            </div>
             <div class="col-md-11 mt-3 mx-auto">
                 <h3>お気に入り商品</h3>
                 <!-- <h4 class="text-center mt-5">お気に入りの商品は登録されていません。</h4> -->

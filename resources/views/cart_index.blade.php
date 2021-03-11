@@ -24,6 +24,9 @@
                             <p style="font-size:20px">{{ $cart->sweet->name }}</p></a>
                         <p>購入数　{{ $cart->amout }}個</p>
                         <p>小計　¥{{ $total = $cart->amout*$cart->sweet->price }}</p>
+                        @if($stock = $cart->sweet->stock - $cart->amout < 0)
+                            <span style="color:red;text-size:18px">こちらの商品の在庫が不足しているためご購入いただけません。</span>
+                        @endif
                     </div>
                     <form method="post" action="{{ route('carts.destroy', ['id' => $cart->id]) }}" class="mt-auto">
                     @csrf

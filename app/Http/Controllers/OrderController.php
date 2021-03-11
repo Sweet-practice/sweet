@@ -18,8 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id',Auth::user()->id)->get();
-        // print_r($orders);
+        $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         return view('order_index',['orders' => $orders]);
     }
 
@@ -31,7 +30,13 @@ class OrderController extends Controller
     public function create()
     {
         $carts = Cart::where('user_id',Auth::user()->id)->get();
-        return view('order_create',['carts' => $carts]);
+        foreach ($carts as $cart){
+            if($cart->sweet->stock - $cart->amout < 0){
+                $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
+            }
+        }
+        $stock = 0;
+        return view('order_create',['carts' => $carts,'stock' => $stock]);
     }
 
     /**
@@ -59,9 +64,19 @@ class OrderController extends Controller
             $order_detail->amout = $cart->amout;
             $order_detail->price = $cart->amout*$cart->sweet->price;
             $order_detail->save();
+            Cart::where('id',$cart->id)->delete();
+
+            $sweet = Sweet::find($cart->sweet->id);
+            $sweet->stock = $sweet->stock - $cart->amout;
+            if($sweet->stock == '0'){
+                $sweet->status = 'OutOfStock';
+            }elseif($sweet->stock <= '10'){
+                $sweet->status = 'LowInventory';
+            }
+            $sweet->save();
         }
 
-        Cart::where('user_id',Auth::user()->id)->delete();
+        // Cart::where('user_id',Auth::user()->id)->delete();
         return view('home');
     }
 
@@ -73,7 +88,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return view('order_show');
+        $order_detail = OrderDetail::where('order_id',$order->id)->get();
+        return view('order_show',['order_detail' => $order_detail, 'order' => $order]);
     }
 
     /**
