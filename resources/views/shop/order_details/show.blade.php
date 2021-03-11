@@ -2,8 +2,13 @@
 
 @section('content')
 
-@foreach($order_details->order_details as $order_detail)
-  {{ $order_detail->sweet_name }}
-@endforeach
+<div class="container">
+	@foreach($order_details->order_details as $order_detail)
+	  <div class="row">
+	  	{{ $order_detail->sweet_name }}
+	  </div>
+	@endforeach
+</div>
+
 
 @endsection

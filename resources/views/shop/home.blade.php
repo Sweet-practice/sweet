@@ -17,13 +17,13 @@
                     <form action="{{ route('shop.search')}}" method="get">
                       @csrf
                       {{method_field('get')}}
-                      <input type="text" class="form-control col-md-5" placeholder="検索したい名前を入力してください" name="name">
-                      <select class="form-control col-md-5" name="value">
+                      <input type="text" class="form-control offset-2 col-md-8 mb-3" placeholder="検索したい名前を入力してください" name="name">
+                      <select class="form-control offset-4 col-md-4" name="value">
                         <option selected value="ユーザー">ユーザー</option>
                         <option selected value="お菓子">お菓子</option>
                       </select>
 
-                        <button type="submit" class="btn btn-primary col-md-5">検索</button>
+                        <button type="submit" class="btn btn-primary offset-4 col-md-4 my-3">検索</button>
                     </form>
                   </div>
 
