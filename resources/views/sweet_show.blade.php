@@ -51,12 +51,17 @@
             </table>
             <form action="{{ route('carts.create') }}" method="post" id="cart" class="mt-5 text-right">
             @csrf
-                <input type="number" name="amout" value="1" min="1" style="width:60px">
-                @if(Auth::user())
-                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                @if($sweet->status == 'OutOfStock')
+                    <span style="color:red;">売り切れ中です。<br>次の入荷をお待ちください</span>
+                @else
+                    <p>＊在庫以上は選択できません</p>
+                    <input type="number" name="amout" value="1" min="1" max="{{ $sweet->stock }}" style="width:60px">
+                    @if(Auth::user())
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    @endif
+                    <input type="hidden" name="sweet_id" value="{{ $sweet->id }}">
+                    <button type="submit" class="btn btn-primary">カートに入れる</button>
                 @endif
-                <input type="hidden" name="sweet_id" value="{{ $sweet->id }}">
-                <button type="submit" class="btn btn-primary">カートに入れる</button>
             </form>
         </div>
     </div>

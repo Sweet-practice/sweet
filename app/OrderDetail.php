@@ -12,4 +12,9 @@ class OrderDetail extends Model
 	  {
 	    return $this->belongsTo('App\Order');
 	  }
+
+		public function sweet()
+  {
+      return $this->belongsTo('App\Sweet');
+  }
 }

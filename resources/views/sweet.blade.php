@@ -7,7 +7,7 @@
             <div class="text-right">
                 <form action="{{ route('search') }}" method="post" id="search">
                 @csrf
-                    <input type="text" name="name">
+                    <input type="text" name="name" placeholder="商品名検索">
                     <button type="submit">検索</button>
                 </form>
             </div>

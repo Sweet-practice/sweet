@@ -8,11 +8,16 @@
         </div>
 
         <div class="col-md-12 mt-3 p-5">
+            @if(count($orders) == 0)
+                <div class="w-100 mt-3">
+                    <h3 class="text-center">購入履歴はありません。</h3>
+                </div>
+            @else
             @foreach ($orders as $order)
-                <div class="m-3 row border-bottom pb-1">
-                    <a href="{{ route('orders.show', ['order' => $order->id]) }}" class="">
-                        <p style="font-size:20px">{{ $order->id }}</p>
-                    </a>
+                <a href="{{ route('orders.show', ['order' => $order->id]) }}" class="">
+                    <p style="font-size:20px; margin-bottom:0;">{{ $order->id }}</p>
+                </a>
+                <div class="m-1 row border-bottom pb-1">
                     <div class="w-25">
                     @foreach ($order->order_details as $order_d)
                         <div class="row ml-3">
@@ -22,12 +27,27 @@
                     @endforeach
                     </div>
                     <div class="w-50 pl-5">
-                        <p>{{ $order->status }}</p>
-                        <p>¥{{ $order->total_price }}</p>
+                        @switch($order->status)
+                        @case('Untreated')
+                            <p>未処理</p>
+                            @break
+                        @case('Undispatched')
+                            <p>未発送</p>
+                            @break
+                        @case('Shipping')
+                            <p>発送中</p>
+                            @break
+                        @case('Sent')
+                            <p>発送済み</p>
+                            @break
+                        @endswitch
+                        <p>合計　¥{{ $order->total_price }}　(送料込み)</p>
                     </div>
+                    <p class="text-right" style="margin-bottom:0;">{{ $order->created_at->format('Y/m/d') }}</p>
                 </div>
             @endforeach
             <p>送料　¥220</p>
+            @endif
         </div>
     </div>
 </div>
