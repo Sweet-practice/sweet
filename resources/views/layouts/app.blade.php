@@ -54,7 +54,7 @@
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('マイページ') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('orders.index') }}">{{ __('購入履歴') }}</a>
+                                <a class="nav-link" href="{{ route('user.order.index') }}">{{ __('購入履歴') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('carts.index') }}">{{ __('カート') }}</a>
