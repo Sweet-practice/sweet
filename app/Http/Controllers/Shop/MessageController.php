@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Message;
+use Illuminate\Support\Facades\Auth;
+use App\Events\MessageSent;
 
 class MessageController extends Controller
 {
@@ -14,7 +17,6 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -35,7 +37,12 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $message = new Message;
+      $message->shop_id = $request->user_id;
+      $message->room_id = $request->room_id;
+      $message->content = $request->content;
+      $message->save();
+      event(new MessageSent($message));
     }
 
     /**
