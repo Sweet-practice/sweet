@@ -42,4 +42,10 @@ class User extends Authenticatable
       // カテゴリは複数のsweetを持つ
       return $this->hasMany('App\Order');
   }
+
+    // ユーザーがいいねしている投稿
+    public function favolits()
+    {
+        return $this->hasMany('App\Favolite');
+    }
 }
