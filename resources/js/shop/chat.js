@@ -15,11 +15,17 @@ $(document).ready(function() {
       },
       method: "POST"
     });
+    $("#content").val("");
     return false;
   });
   window.Echo.channel("sweet").listen("MessageSent", e => {
     if($("#room_id").val() == e.message.room_id){
-      $("#room").append('<li>' + e.message.content + '</li>');
+      if(e.message.shop_id){
+        $('.talk').append('<div class="row offset-8 talk_right"><p>' + e.message.content + '</p></div>');
+      }
+      else if(e.message.user_id){
+        $('.talk').append('<div class="row offset-8 talk_left"><p>' + e.message.content + '</p></div>');
+      }
     }
   });
 });

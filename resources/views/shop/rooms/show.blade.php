@@ -1,16 +1,23 @@
+<head>
+  <link rel="stylesheet" href="{{ asset('css/room/show.css') }}">
+</head>
 @extends('layouts.app_shop')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-        </div>
-    </div>
-    <ul id="room">
-        @foreach($messages->messages as $message)
-          <li>{{ $message->content }}</li>
-        @endforeach
-    </ul>
+
+<div class="talk">
+  @foreach($messages->messages as $message)
+    @if(!is_null($message->shop_id))
+      <div class="row offset-8 talk_right">
+        <p>{{ $message->content }}</p>
+      </div>
+    @elseif(!is_null($message->user_id))
+      <div class="row talk_left">
+        <p>{{ $message->content }}</p>
+      </div>
+    @endif
+  @endforeach
+</div>
 
     <form>
       <input type="hidden" name="user_id" id="user_id" value="{{$user}}">
