@@ -42,4 +42,9 @@ class User extends Authenticatable
       // カテゴリは複数のsweetを持つ
       return $this->hasMany('App\Order');
   }
+
+  public function rooms()
+  {
+    return $this->hasMany('App\Room');
+  }
 }

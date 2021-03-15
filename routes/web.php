@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 // ユーザー側
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -54,7 +55,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('categories', 'Shop\CategoryController');
     Route::resource('sweets', 'Shop\SweetController');
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
-    Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create']);
+    Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create', 'store']);
     Route::resource('orders', 'Shop\OrderController')->only(['update']);
     Route::resource('order_details', 'Shop\OrderDetailController')->only(['show', 'edit']);
 });
