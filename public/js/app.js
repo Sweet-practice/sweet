@@ -55895,6 +55895,51 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/_ajaxlike.js":
+/*!***********************************!*\
+  !*** ./resources/js/_ajaxlike.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likeSweetId;
+  like.on('click', function () {
+    var $this = $(this);
+    likeSweetId = $this.data('sweetid');
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/ajaxlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'sweet_id': likeSweetId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data.sweetLikesCount);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -55908,6 +55953,8 @@ module.exports = function(module) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+__webpack_require__(/*! ./_ajaxlike */ "./resources/js/_ajaxlike.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
@@ -55975,8 +56022,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "99e96388b7d6cf92b461",
-  cluster: "ap3",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 

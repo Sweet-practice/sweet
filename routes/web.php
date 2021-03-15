@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::get('/home/edit', 'HomeController@edit')->name('edit');
     Route::post('/home/edit', 'HomeController@update')->name('update');
     Route::resource('favorites', 'FavoriteController')->only(['index']);
+    Route::post('/ajaxlike', 'FavoriteController@ajaxlike')->name('favorits.ajaxlike');
     Route::resource('carts', 'CartController')->only(['index']);
     Route::post('carts', 'CartController@create')->name('carts.create');
     Route::delete('carts/{id}', 'CartController@destroy')->name('carts.destroy');
