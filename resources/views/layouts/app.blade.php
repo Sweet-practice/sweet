@@ -18,10 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <style>.navbar{background-color: #FF9999;}
-            .loved i {color: red !important;}
-    </style>
+    <style>.navbar{background-color: #FF9999;}</style>
 </head>
 <body>
     <div id="app">
