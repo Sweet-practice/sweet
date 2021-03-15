@@ -47,4 +47,10 @@ class User extends Authenticatable
   {
     return $this->hasMany('App\Room');
   }
+  
+  // ユーザーがいいねしている投稿
+    public function favolits()
+    {
+        return $this->hasMany('App\Favolite');
+    }
 }
