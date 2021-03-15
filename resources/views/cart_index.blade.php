@@ -24,8 +24,8 @@
                             <p style="font-size:20px">{{ $cart->sweet->name }}</p></a>
                         <p>購入数　{{ $cart->amout }}個</p>
                         <p>小計　¥{{ $total = $cart->amout*$cart->sweet->price }}</p>
-                        @if($cart->sweet->stock - $cart->amout < 0)
-                            <span style="color:red;">{{ $stock }}</span>
+                        @if($stock = $cart->sweet->stock - $cart->amout < 0)
+                            <span style="color:red;text-size:18px">こちらの商品の在庫が不足しているためご購入いただけません。</span>
                         @endif
                     </div>
                     <form method="post" action="{{ route('carts.destroy', ['id' => $cart->id]) }}" class="mt-auto">
@@ -33,18 +33,14 @@
                     @method('DELETE')
                         <button type="submit" class="btn btn-primary">削除</button>
                     </form>
+                    <!-- <a href="{{ route('carts.destroy',['id' => $cart->id]) }}" class="mt-auto btn btn-primary">削除</a> -->
                 </div>
                 <?php
                     $sum += $total;
                 ?>
             @endforeach
             <p style="font-size:30px">合計　¥{{ $sum }}</p>
-            @if(isset($stock))
-                <p style="color:red;">在庫が不足している商品があるためご購入いただけません。</p>
-                <p>次の入荷をお待ちください。</p>
-            @else
-                <a href="{{ route('orders.create') }}" class="text-right btn btn-primary">購入手続きへ進む</a>
-            @endif
+            <a href="{{ route('orders.create') }}" class="text-right btn btn-primary">購入手続きへ進む</a>
         @endif
         </div>
     </div>

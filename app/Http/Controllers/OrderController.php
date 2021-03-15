@@ -33,11 +33,10 @@ class OrderController extends Controller
         foreach ($carts as $cart){
             if($cart->sweet->stock - $cart->amout < 0){
                 $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
-            return view('order_create',['carts' => $carts,'stock' => $stock]);
-
             }
         }
-        return view('order_create',['carts' => $carts]);
+        $stock = 0;
+        return view('order_create',['carts' => $carts,'stock' => $stock]);
     }
 
     /**
