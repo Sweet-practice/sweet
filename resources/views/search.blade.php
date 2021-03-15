@@ -21,22 +21,7 @@
 			</div>
 		@endif
 		@foreach ($search as $sweet)
-			<div class="m-3">
-				@if($like_model->like_exist(Auth::user()->id,$sweet->id))
-					<p class="favorite-marke text-right">
-						<a class="js-like-toggle loved" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart"></i></a>
-						@foreach ($sweets as $sw)
-						<span class="likesCount">{{$sw->favolits_count}}</span>
-						@endforeach
-					</p>
-				@else
-					<p class="favorite-marke text-right">
-						<a class="js-like-toggle" data-sweetid="{{ $sweet->id }}"><i class="far fa-heart" style="color:red;"></i></a>
-						@foreach ($sweets as $sw)
-						<span class="likesCount">{{$sw->favolits_count}}</span>
-						@endforeach
-					</p>
-				@endif​
+			<div class="m-3 row">
 				<a href="{{ route('show', ['sweet' => $sweet->id]) }}" class="">
 					<img src="{{ $sweet->path }}" alt="画像">
 					<p class="text-center">{{ $sweet->name }}</p>

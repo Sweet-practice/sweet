@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sweet;
 use App\Category;
-use App\Favolite;
 
 class SweetController extends Controller
 {
@@ -88,30 +87,16 @@ class SweetController extends Controller
     }
 
     public function search(Request $request){
-        $data = [];
-        // ユーザの投稿の一覧を作成日時の降順で取得
-        //withCount('テーブル名')とすることで、リレーションの数も取得できます。
-        $sweets = Sweet::withCount('favolits')->get();
-        // dd($sweets);
-        // foreach($sweets as $sweet) {
-        //     print_r($sweet->favolits_count);
-        //   }
-        $like_model = new Favolite;
-
-        $data = [
-                'sweets' => $sweets,
-                'like_model'=>$like_model,
-            ];
         if(isset($request['name'])){
             $name = $request['name'];
             $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name]);
+            return view('search', ['search' => $search, 'name' => $name]);
         }
         elseif(isset($request['category'])){
             $id = $request['category'];
             $name = $request['category_name'];
             $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name, 'id' => $id]);
+            return view('search', ['search' => $search, 'name' => $name, 'id' => $id]);
         }
     }
 }

@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 // ユーザー側
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -27,7 +28,6 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::get('/home/edit', 'HomeController@edit')->name('edit');
     Route::post('/home/edit', 'HomeController@update')->name('update');
     Route::resource('favorites', 'FavoriteController')->only(['index']);
-    Route::post('/ajaxlike', 'FavoriteController@ajaxlike')->name('favorits.ajaxlike');
     Route::resource('carts', 'CartController')->only(['index']);
     Route::post('carts', 'CartController@create')->name('carts.create');
     Route::delete('carts/{id}', 'CartController@destroy')->name('carts.destroy');
@@ -55,7 +55,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('categories', 'Shop\CategoryController');
     Route::resource('sweets', 'Shop\SweetController');
     Route::resource('rooms', 'Shop\RoomController')->only(['index', 'show']);
-    Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create']);
+    Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create', 'store']);
     Route::resource('orders', 'Shop\OrderController')->only(['update']);
     Route::resource('order_details', 'Shop\OrderDetailController')->only(['show', 'edit']);
 });

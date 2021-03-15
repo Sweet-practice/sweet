@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Room;
+use App\Message;
 
 class RoomController extends Controller
 {
@@ -46,7 +49,9 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = Auth::id();
+      $messages = Room::where('user_id', $id)->first();
+      return view('shop/rooms.show', ['messages' => $messages, 'user' => $user]);
     }
 
     /**

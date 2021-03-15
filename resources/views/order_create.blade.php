@@ -30,17 +30,12 @@
             <p>小計　¥{{ $sum }}</p>
             <p>送料　¥220</p>
             <p style="font-size:30px">合計　¥{{ $sum+220 }}</p>
-            @if(isset($stock))
-                <p style="color:red;">在庫が不足している商品があるためご購入いただけません。</p>
-                <p>次の入荷をお待ちください。</p>
-            @else
             <form action="{{ route('orders.store') }}" method="post" class="mt-2">
             @csrf
                 <input type="hidden" name="postage" value="220">
                 <input type="hidden" name="total_price" value="{{ $sum+220 }}">
                 <button type="submit" class="btn btn-primary">購入内容を確定する</button>
             </form>
-            @endif
         </div>
     </div>
 </div>

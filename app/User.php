@@ -43,12 +43,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Order');
   }
 
-   
-  
-  
-  
-  
-  
+  public function rooms()
+  {
+    return $this->hasMany('App\Room');
+  }
   
   // ユーザーがいいねしている投稿
     public function favolits()

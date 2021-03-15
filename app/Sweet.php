@@ -17,11 +17,6 @@ class Sweet extends Model
       return $this->hasMany('App\Image');
   }
 
-	public function favolits()
-  {
-      return $this->hasMany('App\Favolite');
-  }
-
 	protected $table = 'sweets';
 	protected $fillable =
 	[

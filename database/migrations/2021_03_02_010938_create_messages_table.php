@@ -17,14 +17,16 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('shop_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('shop_id')->nullable();
+            $table->unsignedBigInteger('room_id');
             $table->string('content');
             $table->enum('status', MessageStatus::getKeys());
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('room_id')->references('id')->on('rooms');
         });
     }
 
