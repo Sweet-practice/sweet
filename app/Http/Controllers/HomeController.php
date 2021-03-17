@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\Sweet;
+use App\Favolite;
 
 class HomeController extends Controller
 {
@@ -25,7 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
+            $q->where('user_id', Auth::user()->id);})->get();
+        $like_model = new Favolite;
+        $data = [
+                'like_model'=>$like_model,
+            ];
+        return view('home',$data,['sweets' => $sweets]);
     }
 
     public function edit()

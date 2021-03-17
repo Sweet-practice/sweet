@@ -8,8 +8,23 @@
         </div>
 
         <div class="col-md-12 mt-3 p-5">
+            @if(Auth::user())
+            @foreach($favolite as $favo)
+				@if($like_model->like_exist(Auth::user()->id,$sweet->id))
+					<p class="favorite-marke text-right">
+						<a href="" class="js-like-toggle loved" style="color:gray;" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x"></i></a>
+						<span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
+					</p>
+				@else
+					<p class="favorite-marke text-right">
+						<a href="" class="js-like-toggle" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x" style="color:gray;"></i></a>
+						<span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
+					</p>
+				@endif​
+            @endforeach
+			@endif​
             <div class="row">
-                <img src="{{ $sweet->path }}" class="mx-auto" alt="お気に入り">
+                <img src="{{ $sweet->path }}" class="mx-auto" alt="お菓子画像">
             </div>
             <table class="table mt-5 mx-auto" style="width:80%">
                 <tr>

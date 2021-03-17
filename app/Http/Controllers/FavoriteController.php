@@ -105,7 +105,7 @@ class FavoriteController extends Controller
         }
 
         //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
-        $sweetLikesCount = $sweet->loadCount('favolits')->likes_count;
+        $sweetLikesCount = $sweet->loadCount('favolits')->favolits_count;
 
         //一つの変数にajaxに渡す値をまとめる
         //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
