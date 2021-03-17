@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Room;
 use App\Message;
+use App\User;
 
 class RoomController extends Controller
 {
@@ -17,7 +18,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+      $chats = Room::all();
+      return view('shop/rooms.index', ['chats' => $chats]);
     }
 
     /**
@@ -38,7 +40,6 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -51,6 +52,13 @@ class RoomController extends Controller
     {
       $user = Auth::id();
       $messages = Room::where('user_id', $id)->first();
+
+      foreach($messages->messages as $message){
+        if(is_null($message->shop_id) && $message->status === 'Unread'){
+          $message->status = 'read';
+          $message->save();
+        }
+      }
       return view('shop/rooms.show', ['messages' => $messages, 'user' => $user]);
     }
 

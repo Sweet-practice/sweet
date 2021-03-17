@@ -89,5 +89,43 @@
             @yield('content')
         </main>
     </div>
+    @if(!empty($shop))
+      <footer class="footer">
+        <div id="map" class="row col-8 offset-2" style="height: 500px;">
+          <input type="hidden" class="lat" value="<?= $shop['lat'] ?>">
+          <input type="hidden" class="lng" value="<?= $shop['lng'] ?>">
+        </div>
+
+        <script>
+          // googleMapsAPIを持ってくるときに,callback=initMapと記述しているため、initMap関数を作成
+          function googlemap() {
+            lat = $('.lat').val();
+            lng = $('.lng').val();
+            // welcome.blade.phpで描画領域を設定するときに、id=mapとしたため、その領域を取得し、mapに格納します。
+            map = document.getElementById("map");
+            // 東京タワーの緯度は35.6585769,経度は139.7454506と事前に調べておいた
+            let position = new google.maps.LatLng(lat,lng);
+            // オプションを設定
+            opt = {
+              zoom: 13, //地図の縮尺を指定
+              center: position, //センターを東京タワーに指定
+            };
+            // 地図のインスタンスを作成します。第一引数にはマップを描画する領域、第二引数にはオプションを指定
+            mapObj = new google.maps.Map(map, opt);
+            // マーカーピン
+            marker = new google.maps.Marker({
+            // ピンを差す位置を決めます。
+              position: position,
+              // ピンを差すマップを決めます。
+              map: mapObj,
+              // ホバーしたときに「tokyotower」と表示されるようにします。
+              title: '皇居',
+            });
+          }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{config('app.g_map')}}&callback=googlemap" async defer></script>
+        </script>
+      </footer>
+    @endif
 </body>
 </html>

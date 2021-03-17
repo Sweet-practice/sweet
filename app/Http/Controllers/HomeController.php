@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\BaseClass;
 use Auth;
 use App\User;
 
@@ -25,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $shop = BaseClass::terminaltype();
+      return view('home', ['shop' => $shop]);
     }
 
     public function edit()

@@ -134,6 +134,8 @@ return [
     |
     */
 
+    'g_map' => env('G_MAP'),
+
     'providers' => [
 
         /*
@@ -225,6 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'BaseClass' => app\Library\BaseClass::class,
 
     ],
 

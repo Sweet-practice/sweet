@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\BaseClass;
 use Auth;
 use App\Cart;
 use App\Sweet;
@@ -19,7 +20,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
-        return view('order_index',['orders' => $orders]);
+        $shop = BaseClass::terminaltype();
+        return view('order_index',['orders' => $orders, 'shop' => $shop]);
     }
 
     /**
