@@ -51,8 +51,15 @@ class SweetController extends Controller
      */
     public function show(Sweet $sweet)
     {
-        $category  = \App\Category::find($sweet->category_id);
-        return view('sweet_show',['sweet' => $sweet, 'category' => $category]);
+        $category  = Category::find($sweet->category_id);
+        $favolite = $sweet->where('id', '=', $sweet->id)->withCount('favolits')->get();
+        $like_model = new Favolite;
+
+        $data = [
+                'like_model'=>$like_model,
+                'favolite' => $favolite,
+            ];
+        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category]);
     }
 
     /**
@@ -93,26 +100,25 @@ class SweetController extends Controller
         $data = [];
         // ユーザの投稿の一覧を作成日時の降順で取得
         //withCount('テーブル名')とすることで、リレーションの数も取得できます。
-        $sweets = Sweet::withCount('favolits')->get();
+        // $sweets = Sweet::withCount('favolits')->get();
         // dd($sweets);
         // foreach($sweets as $sweet) {
-        //     print_r($sweet->favolits_count);
-        //   }
+        //     $sweet_data[] = $sweet->favolits_count;
+        // }
         $like_model = new Favolite;
 
         $data = [
-                'sweets' => $sweets,
                 'like_model'=>$like_model,
             ];
         if(isset($request['name'])){
             $name = $request['name'];
-            $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
+            $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->withCount('favolits')->get();
             return view('search', $data, ['search' => $search, 'name' => $name]);
         }
         elseif(isset($request['category'])){
             $id = $request['category'];
             $name = $request['category_name'];
-            $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->get();
+            $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->withCount('favolits')->get();
             return view('search', $data, ['search' => $search, 'name' => $name, 'id' => $id]);
         }
     }
