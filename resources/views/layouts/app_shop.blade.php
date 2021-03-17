@@ -48,6 +48,7 @@
                             <li class="nav-item dropdown">
                                 <a href="{{route('categories.index')}}">カテゴリー一覧</a>
                                 <a href="{{route('sweets.create')}}">お菓子追加</a>
+                                <a href="{{route('rooms.index')}}">お問い合わせ一覧</a>
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>

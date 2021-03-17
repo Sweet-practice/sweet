@@ -81,59 +81,48 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/shop/chat.js":
+/***/ "./resources/js/googlemap.js":
 /*!***********************************!*\
-  !*** ./resources/js/shop/chat.js ***!
+  !*** ./resources/js/googlemap.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
-  $.ajaxSetup({
-    headers: {
-      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-  });
-  $("#btn_send").click(function () {
-    var url = "/shop/messages";
-    $.ajax({
-      url: url,
-      data: {
-        content: $("#content").val(),
-        room_id: $("#room_id").val(),
-        user_id: $("#user_id").val()
-      },
-      method: "POST"
-    });
-    $("#content").val("");
-    return false;
-  });
-  window.Echo.channel("sweet").listen("MessageSent", function (e) {
-    if ($("#room_id").val() == e.message.room_id) {
-      if (e.message.shop_id) {
-        $('.talk').append('<div class="row"><div class="offset-10 status"><p>' + e.message.status + '</p></div><div class="col-1 talk_right">' + e.message.content + '</p></div></div>');
-      } else if (e.message.user_id) {
-        $('.talk').append('<div class="row offset-8 talk_left"><p>' + e.message.content + '</p></div>');
-      }
-    }
-  });
-});
+// googleMapsAPIを持ってくるときに,callback=initMapと記述しているため、initMap関数を作成
+function initMap() {
+  // welcome.blade.phpで描画領域を設定するときに、id=mapとしたため、その領域を取得し、mapに格納します。
+  map = document.getElementById("map"); // 東京タワーの緯度は35.6585769,経度は139.7454506と事前に調べておいた
+
+  var tokyoTower = {
+    lat: 35.6585769,
+    lng: 139.7454506
+  }; // オプションを設定
+
+  opt = {
+    zoom: 13,
+    //地図の縮尺を指定
+    center: tokyoTower //センターを東京タワーに指定
+
+  }; // 地図のインスタンスを作成します。第一引数にはマップを描画する領域、第二引数にはオプションを指定
+
+  mapObj = new google.maps.Map(map, opt);
+}
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!*****************************************!*\
-  !*** multi ./resources/js/shop/chat.js ***!
+  !*** multi ./resources/js/googlemap.js ***!
   \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/shop/chat.js */"./resources/js/shop/chat.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/googlemap.js */"./resources/js/googlemap.js");
 
 
 /***/ })

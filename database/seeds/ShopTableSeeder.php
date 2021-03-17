@@ -14,7 +14,7 @@ class ShopTableSeeder extends Seeder
         DB::table('shops')->insert([
             'id' => '1',
             'name' => 'お菓子',
-            'address' => '神奈川県',
+            'address' => '東京都千代田区千代田１−１',
             'email' => 'email.shop@co.jp',
             'password' => bcrypt('shop1234'),
             'open_time' => '12:00',
