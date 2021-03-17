@@ -36,6 +36,6 @@ class Shop extends Authenticatable
 
   public function Messages()
   {
-    return $this->belongsTo('App\Message');
+    return $this->hasMany('App\Message');
   }
 }

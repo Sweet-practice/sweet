@@ -1,78 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+#  アプリ名　sweet
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## バージョン
+    PHP 7.4.11
+    Laravel 6.20.16
+    vagrant(Homestead)を用いて開発環境を揃えています。
+  
+## メンバー
+    ２人
+  
+## なぜこのアプリを作ったか
+    Laravelの勉強として上流過程の事から実装段階までを全て行う事で自分自身のスキルアップを計りたかったから。
+    また、実務に入ったときのことを想定しチームで開発を行いました。
+    一般的なECサイトを意識して作成をしました。
+    また、それぞれが実装してみたい機能やAPIを組み込んだりもしています。
+   
+##  テーブル設計
+<img width="813" alt="スクリーンショット 2021-03-16 0 27 45" src="https://user-images.githubusercontent.com/59087539/111178550-a14fbc00-85ee-11eb-8217-7fed807bf830.png">
+   
+## sweetの機能
+###   １、条件検索機能
+    お菓子かユーザーで検索することが出来ます。
+    また、お菓子の場合はカテゴリーも交えて検索できるよう実装しています。
+    
+###   ２、チャット機能（問い合わせ機能）
+    ユーザーがお店に対して問い合わせをしたい場合は、チャットを用いて対応します。
+    pusherを用いてリアルタイム通信を実装しています。
+    また、チャットではお馴染みの既読・未読が分かる機能も実装しております。
+    
+###   ３、注文
+    userが買いたい商品を購入するまでの一連の流れができるようになっています。（ECサイトなので当然ですが...。）
+    カートに入れる→確認画面→購入確定という流れになっています。
+    
+###   ４、GoogleMapAPI
+    お店の場所をGoogleMapAPIを用いて表示できるようにしました。
+    今回は架空のお店なので住所は皇居に設定しています。
+    
+###   ５、お気に入り機能
+    userがお菓子をお気に入り登録できるようにしました。
+    お気に入りは、非同期通信で出来るようにしています。
+    
+###   ６、S3を使用した画像保存・表示
+    shop側がsweetの画像を多く保存できるようS3へ保存されるように実装しました。
+    
+##   さいごに
+    ここまでご覧いただきありがとうございます。
+    初めてのLaravelの開発で至らない点ばかりだとは思いますが、
+    今回のこのプロジェクトでさらに成長でき、尚且つ楽しんで開発をすることが出来ました。
+    この経験をしっかりと活かしてプログラマーとして社会に出て活躍していければいいなと思っています。
+    また、繰り返しにはなりますが、ここまでご覧いただきありがとうございました。
+    

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\BaseClass;
 use Auth;
 use App\User;
 use App\Sweet;
@@ -33,7 +34,8 @@ class HomeController extends Controller
         $data = [
                 'like_model'=>$like_model,
             ];
-        return view('home',$data,['sweets' => $sweets]);
+        $shop = BaseClass::terminaltype();
+      return view('home', $data, ['shop' => $shop, 'sweets' => $sweets]);
     }
 
     public function edit()

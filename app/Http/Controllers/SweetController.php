@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Library\BaseClass;
 use App\Sweet;
 use App\Category;
 use App\Favolite;
@@ -16,8 +17,9 @@ class SweetController extends Controller
      */
     public function index()
     {
+        $shop = BaseClass::terminaltype();
         $categorys  = Category::all();
-        return view('sweet', ['categorys' => $categorys]);
+        return view('sweet', ['categorys' => $categorys, 'shop' => $shop]);
     }
 
     /**
