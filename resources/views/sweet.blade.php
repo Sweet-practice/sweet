@@ -27,63 +27,31 @@
         <div class="col-md-12 mt-3 p-5">
             <h2>売れ筋TOP5</h2>
             <div class="row justify-content-between">
+                @foreach($order_details as $order_detail)
                 <div class="m-1" style="width:150px">
-                    <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
+                    <a href="{{ route('show', ['sweet' => $order_detail->id]) }}">
+                        <img src="{{ $order_detail->path }}" class="w-100" style="height:100px" alt="お気に入り">
+                        <h5>{{ $order_detail->name }}</h5>
+                    </a>
+                    <p>{{ $order_detail->introduction }}</p>
                 </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
+                @endforeach
             </div>
         </div>
 
         <div class="col-md-12 mt-3 p-5">
             <h2>お気に入り数TOP5</h2>
             <div class="row justify-content-between">
-                    <div class="m-1" style="width:150px">
-                        <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                        <a href="#"><h5>商品名</h5></a>
-                        <p>商品紹介</p>
-                    </div>
-                    <div class="m-1" style="width:150px">
-                        <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                        <a href="#"><h5>商品名</h5></a>
-                        <p>商品紹介</p>
-                    </div>
-                    <div class="m-1" style="width:150px">
-                        <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                        <a href="#"><h5>商品名</h5></a>
-                        <p>商品紹介</p>
-                    </div>
-                    <div class="m-1" style="width:150px">
-                        <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                        <a href="#"><h5>商品名</h5></a>
-                        <p>商品紹介</p>
-                    </div>
-                    <div class="m-1" style="width:150px">
-                        <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                        <a href="#"><h5>商品名</h5></a>
-                        <p>商品紹介</p>
-                    </div>
+                @foreach($sweets as $sweet)
+                <div class="m-1" style="width:150px">
+                    <a href="{{ route('show', ['sweet' => $sweet->id]) }}">
+                        <img src="{{ $sweet->path }}" class="w-100" style="height:100px" alt="お気に入り">
+                        <h5>{{ $sweet->name }}</h5>
+                    </a>
+                    <p>{{ $sweet->introduction }}</p>
                 </div>
+                @endforeach
+            </div>
         </div>
 
         <div class="col-md-12 mt-3 p-5">

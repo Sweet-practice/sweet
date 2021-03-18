@@ -40,32 +40,16 @@
             <div class="col-md-11 mt-3 mx-auto">
                 <h3>おすすめ商品</h3>
                 <div class="d-flex justify-content-between flex-wrap">
-                <div class="m-1" style="width:150px">
-                    <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
+                    @foreach($randoms as $random)
+                    <div class="m-1" style="width:150px">
+                        <a href="{{ route('show', ['sweet' => $random->id]) }}">
+                            <img src="{{ $random->path }}" class="w-100" style="height:100px" alt="お気に入り">
+                            <h5>{{ $random->name }}</h5>
+                        </a>
+                        <p>{{ $random->introduction }}</p>
+                    </div>
+                    @endforeach
                 </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/sweet1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-                <div class="m-1" style="width:150px">
-                    <img src="image/cake1.jpeg" class="w-100" style="height:100px" alt="お気に入り">
-                    <a href="#"><h5>商品名</h5></a>
-                    <p>商品紹介</p>
-                </div>
-            </div>
             </div>
         </div>
     </div>
