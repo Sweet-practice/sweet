@@ -19,7 +19,9 @@ class SweetController extends Controller
     {
         $shop = BaseClass::terminaltype();
         $categorys  = Category::all();
-        return view('sweet', ['categorys' => $categorys, 'shop' => $shop]);
+        $order_details = Sweet::withCount('orderDetails')->orderBy('order_details_count', 'desc')->limit(5)->get();
+        $sweets = Sweet::withCount('favolits')->orderBy('favolits_count', 'desc')->limit(5)->get();
+        return view('sweet', ['categorys' => $categorys, 'shop' => $shop, 'sweets' => $sweets, 'order_details' => $order_details]);
     }
 
     /**

@@ -27,20 +27,7 @@
                     @endforeach
                     </div>
                     <div class="w-50 pl-5">
-                        @switch($order->status)
-                        @case('Untreated')
-                            <p>未処理</p>
-                            @break
-                        @case('Undispatched')
-                            <p>未発送</p>
-                            @break
-                        @case('Shipping')
-                            <p>発送中</p>
-                            @break
-                        @case('Sent')
-                            <p>発送済み</p>
-                            @break
-                        @endswitch
+                        <p>{{\App\Enums\OrderStatus::getStatus($order->status)}}</p>
                         <p>合計　¥{{ $order->total_price }}　(送料込み)</p>
                     </div>
                     <p class="text-right" style="margin-bottom:0;">{{ $order->created_at->format('Y/m/d') }}</p>

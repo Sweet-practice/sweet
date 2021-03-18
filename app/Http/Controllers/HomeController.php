@@ -31,11 +31,15 @@ class HomeController extends Controller
         $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
             $q->where('user_id', Auth::user()->id);})->get();
         $like_model = new Favolite;
-        $data = [
-                'like_model'=>$like_model,
-            ];
         $shop = BaseClass::terminaltype();
-      return view('home', $data, ['shop' => $shop, 'sweets' => $sweets]);
+
+        $randoms = Sweet::inRandomOrder()->limit(5)->get();
+        $data = [
+                'sweets' => $sweets,
+                'like_model'=>$like_model,
+                'randoms'=>$randoms,
+        ];
+      return view('home', $data, ['shop' => $shop]);
     }
 
     public function edit()

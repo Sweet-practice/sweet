@@ -36,7 +36,16 @@ class CartController extends Controller
     {
         $cart = new Cart;
         $cart->fill($request->all())->save();
-        return view('home');
+        
+        $carts = Cart::where('user_id',Auth::user()->id)->get();
+        foreach ($carts as $cart){
+            if($cart->sweet->stock - $cart->amout < 0){
+                $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
+            return view('cart_index',['carts' => $carts,'stock' => $stock]);
+
+            }
+        }
+        return view('cart_index',['carts' => $carts]);
     }
 
     /**

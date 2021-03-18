@@ -22,6 +22,11 @@ class Sweet extends Model
       return $this->hasMany('App\Favolite');
   }
 
+  public function orderDetails()
+  {
+      return $this->hasMany('App\OrderDetail');
+  }
+
 	protected $table = 'sweets';
 	protected $fillable =
 	[
