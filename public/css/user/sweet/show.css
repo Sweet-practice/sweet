@@ -1,0 +1,24 @@
+#input-range {
+  display: none !important;
+}
+#range-group {
+  position: relative;
+}
+#range-group > a {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 40px;
+}
+#range-group > a:before {
+  content: "★";
+  font-family: "Ionicons";
+  font-size: 40px;
+  color: #aaa;
+  cursor: pointer;
+}
+#range-group > a.on:before {
+  content: "★";
+  color: #fc3;
+  cursor: pointer;
+}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Shop;
 
-class BaseClass {
+  class BaseClass {
     public static function terminaltype(){
       $shop = Shop::find(1);
       $res = array();

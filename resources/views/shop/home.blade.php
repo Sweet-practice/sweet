@@ -18,9 +18,16 @@
                       @csrf
                       {{method_field('get')}}
                       <input type="text" class="form-control offset-2 col-md-8 mb-3" placeholder="検索したい名前を入力してください" name="name">
-                      <select class="form-control offset-4 col-md-4" name="value">
+
+                      <select class="form-control offset-4 col-md-4" id="value" name="value" >
                         <option selected value="ユーザー">ユーザー</option>
                         <option selected value="お菓子">お菓子</option>
+                      </select>
+
+                      <select class="form-control offset-4 col-md-4 mt-3" id="category" name="category">
+                      	@foreach($categories as $category)
+                      	  <option selected value="{{ $category->id }}">{{ $category->name }}</option>
+                      	@endforeach
                       </select>
 
                         <button type="submit" class="btn btn-primary offset-4 col-md-4 my-3">検索</button>
@@ -43,4 +50,22 @@
         </div>
     </div>
 </div>
+<script>
+
+		const p1 = document.getElementById("value");
+
+    p1.onchange = function(){
+			if(p1.value=="ユーザー"){
+				// noneで非表示
+				document.getElementById("category").style.display ="none";
+			}else if(p1.value=="お菓子"){
+				// blockで表示
+				document.getElementById("category").style.display ="block"; 
+	    }
+    }
+
+
+</script>
 @endsection
+
+

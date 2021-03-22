@@ -81,48 +81,87 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/googlemap.js":
-/*!***********************************!*\
-  !*** ./resources/js/googlemap.js ***!
-  \***********************************/
+/***/ "./resources/js/star.js":
+/*!******************************!*\
+  !*** ./resources/js/star.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// googleMapsAPIを持ってくるときに,callback=initMapと記述しているため、initMap関数を作成
-function googlemap() {
-  // welcome.blade.phpで描画領域を設定するときに、id=mapとしたため、その領域を取得し、mapに格納します。
-  map = document.getElementById("map"); // 東京タワーの緯度は35.6585769,経度は139.7454506と事前に調べておいた
+$(function () {
+  $('#range-group').each(function () {
+    for (var i = 0; i < 5; i++) {
+      $(this).append('<a>');
+    }
+  });
+  $('#range-group>a').on('click', function () {
+    var index = $(this).index();
+    $(this).siblings().removeClass('on');
 
-  var tokyoTower = {
-    lat: 35.6585769,
-    lng: 139.7454506
-  }; // オプションを設定
+    for (var i = 0; i < index; i++) {
+      $(this).parent().find('a').eq(i).addClass('on');
+    }
 
-  opt = {
-    zoom: 13,
-    //地図の縮尺を指定
-    center: tokyoTower //センターを東京タワーに指定
+    $(this).parent().find('#input-range').attr('value', index);
+  });
+});
+$(document).on('click', '.comment_btn', function (e) {
+  sweetId = $('.sweetId').val();
+  userId = $('.userId').val();
+  title = $('.title').val();
+  star = $('.star').val();
+  content = $('.content').val();
+  $.ajax({
+    type: 'POST',
+    url: 'sweets/sweetId',
+    data: {
+      shopId: shopId,
+      userId: userId,
+      title: title,
+      star: star,
+      content: content
+    }
+  }).done(function (data) {
+    console.log(data);
+    $('#avg').html(data);
+    getComment();
+    $('.title').val('');
+    $('.content').val('');
+    $('.range-group>a').removeClass('on');
+  }).fail(function () {
+    console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+    console.log("textStatus     : " + textStatus);
+    console.log("errorThrown    : " + errorThrown.message);
+  });
+});
 
-  }; // 地図のインスタンスを作成します。第一引数にはマップを描画する領域、第二引数にはオプションを指定
-
-  mapObj = new google.maps.Map(map, opt);
+function getComment() {
+  $.post("../public/detailshop.php", function (data) {
+    if (shopId === null) {
+      $("#send-comment-error").text("コメントの読み込みに失敗しました。リロードしてみて下さい。");
+      return false;
+    } else if (title === "") $("#comment").text("コメントがありません。");else {
+      $("#newtitle").html(title);
+      $("#newcomment").html(content);
+    }
+  });
 }
 
 /***/ }),
 
-/***/ 3:
-/*!*****************************************!*\
-  !*** multi ./resources/js/googlemap.js ***!
-  \*****************************************/
+/***/ 4:
+/*!************************************!*\
+  !*** multi ./resources/js/star.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/googlemap.js */"./resources/js/googlemap.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/star.js */"./resources/js/star.js");
 
 
 /***/ })

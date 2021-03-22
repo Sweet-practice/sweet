@@ -51,7 +51,7 @@ class SweetController extends Controller
      */
     public function show(Sweet $sweet)
     {
-        $category  = \App\Category::find($sweet->category_id);
+        $category  = Category::find($sweet->category_id);
         return view('sweet_show',['sweet' => $sweet, 'category' => $category]);
     }
 
