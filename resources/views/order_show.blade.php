@@ -10,7 +10,7 @@
                 <?php
                     $sum = 0;
                 ?>
-                <h3>{{ $order->status }}</h3>
+                <h3>{{\App\Enums\OrderStatus::getStatus($order->status)}}</h3>
                 @foreach ($order_detail as $order_d)
                     <div class="m-3 row border-bottom pb-1">
                         <img src="{{ $order_d->sweet->path }}" class="w-25" alt="画像">

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Library\BaseClass;
 use Auth;
 use App\User;
+use App\Sweet;
+use App\Favolite;
 
 class HomeController extends Controller
 {
@@ -26,8 +28,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $shop = BaseClass::terminaltype();
-      return view('home', ['shop' => $shop]);
+        $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
+            $q->where('user_id', Auth::user()->id);})->get();
+        $like_model = new Favolite;
+        $shop = BaseClass::terminaltype();
+
+        $randoms = Sweet::inRandomOrder()->limit(5)->get();
+        $data = [
+                'sweets' => $sweets,
+                'like_model'=>$like_model,
+                'randoms'=>$randoms,
+        ];
+      return view('home', $data, ['shop' => $shop]);
     }
 
     public function edit()

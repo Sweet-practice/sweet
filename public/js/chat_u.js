@@ -81,90 +81,59 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/star.js":
-/*!******************************!*\
-  !*** ./resources/js/star.js ***!
-  \******************************/
+/***/ "./resources/js/chat_u.js":
+/*!********************************!*\
+  !*** ./resources/js/chat_u.js ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function () {
-  $('#range-group').each(function () {
-    for (var i = 0; i < 5; i++) {
-      $(this).append('<a>');
+$(document).ready(function () {
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
     }
   });
-  $('#range-group>a').on('click', function () {
-    var index = $(this).index();
-    $(this).siblings().removeClass('on');
-
-    for (var i = 0; i < index; i++) {
-      $(this).parent().find('a').eq(i).addClass('on');
-    }
-
-    $(this).parent().find('#input-range').attr('value', index);
-  });
-});
-$(function () {
-  $('.comment_btn').on('click', function () {
-    e.stopPropagation();
-    sweetId = $('.sweetId').val();
-    userId = $('.userId').val();
-    title = $('.title').val();
-    star = $('.star').val();
-    content = $('.content').val();
+  $("#usebtn_send").click(function () {
+    var url = "/messages";
     $.ajax({
-      type: 'POST',
-      url: 'sweets/' + sweetId,
+      url: url,
       data: {
-        shopId: shopId,
-        userId: userId,
-        title: title,
-        star: star,
-        content: content
-      }
-    }).done(function (data) {
-      console.log(data);
-      $('#avg').html(data);
-      getComment();
-      $('.title').val('');
-      $('.content').val('');
-      $('.range-group>a').removeClass('on');
-    }).fail(function () {
-      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-      console.log("textStatus     : " + textStatus);
-      console.log("errorThrown    : " + errorThrown.message);
+        content: $("#content").val(),
+        room_id: $("#room_id").val(),
+        user_id: $("#user_id").val()
+      },
+      method: "POST"
     });
+    $("#content").val("");
+    return false;
   });
-});
-
-function getComment() {
-  $.post("../public/detailshop.php", function (data) {
-    if (shopId === null) {
-      $("#send-comment-error").text("コメントの読み込みに失敗しました。リロードしてみて下さい。");
-      return false;
-    } else if (title === "") $("#comment").text("コメントがありません。");else {
-      $("#newtitle").html(title);
-      $("#newcomment").html(content);
+  window.Echo.channel("sweet").listen("MessageSent", function (e) {
+    if ($("#room_id").val() == e.message.room_id) {
+      if (e.message.user_id) {
+        $('.talk').append('<div class="row"><div class="offset-10 status"><p>' + e.message.status + '</p></div><div class="col-1 talk_right">' + e.message.content + '</p></div></div>');
+      } else if (e.message.shop_id) {
+        $('.talk').append('<div class="row offset-8 talk_left"><p>' + e.message.content + '</p></div>');
+      }
     }
   });
-}
+});
 
 /***/ }),
 
-/***/ 4:
-/*!************************************!*\
-  !*** multi ./resources/js/star.js ***!
-  \************************************/
+/***/ 5:
+/*!**************************************!*\
+  !*** multi ./resources/js/chat_u.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/star.js */"./resources/js/star.js");
+module.exports = __webpack_require__(/*! /home/vagrant/code/sweets/resources/js/chat_u.js */"./resources/js/chat_u.js");
 
 
 /***/ })

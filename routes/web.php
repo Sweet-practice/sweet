@@ -31,8 +31,8 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::delete('carts/{id}', 'CartController@destroy')->name('carts.destroy');
     Route::resource('orders', 'OrderController')->only(['create', 'store', 'show']);
     Route::get('orders', 'OrderController@index')->name('user.order.index');
-    Route::resource('rooms', 'RoomController')->only(['show']);
-    Route::resource('messages', 'MessageController')->only(['index', 'show', 'create']);
+    Route::get('rooms', 'RoomController@index')->name('user.rooms.index');
+    Route::post('messages', 'MessageController@store')->name('user.messages.store');
 });
 
 

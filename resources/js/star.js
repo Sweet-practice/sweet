@@ -16,7 +16,8 @@ $(function() {
 
 
 
-$(document).on('click','.comment_btn',function(e){
+$(function() {
+  $('.comment_btn').on('click', function() {
   e.stopPropagation();
   sweetId = $('.sweetId').val();
   userId = $('.userId').val();
@@ -43,6 +44,7 @@ $(document).on('click','.comment_btn',function(e){
     console.log("textStatus     : " + textStatus);
     console.log("errorThrown    : " + errorThrown.message);
   });
+});
 });
 
 

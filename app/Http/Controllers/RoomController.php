@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Room;
+use App\Message;
+use App\User;
 
 class RoomController extends Controller
 {
@@ -13,7 +18,16 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::id();
+        $messages = Room::where('user_id', $user)->first();
+
+        foreach($messages->messages as $message){
+            if(is_null($message->user_id) && $message->status === 'Unread'){
+                $message->status = 'Read';
+                $message->save();
+            }
+        }
+        return view('room', ['messages' => $messages, 'user' => $user]);
     }
 
     /**
