@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/shop/slide.js', 'public/js')
    .js('resources/js/shop/chat.js', 'public/js')
    .js('resources/js/googlemap.js', 'public/js')
+   .js('resources/js/chat_u.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
