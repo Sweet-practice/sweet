@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -98,8 +99,8 @@
     @if(!empty($shop))
       <footer class="footer">
         <div id="map" class="row col-8 offset-2" style="height: 500px;">
-          <input type="hidden" class="lat" value="<?= $shop['lat'] ?>">
-          <input type="hidden" class="lng" value="<?= $shop['lng'] ?>">
+          <input type="hidden" class="lat" value="{{$shop['lat']}}">
+          <input type="hidden" class="lng" value="{{$shop['lng']}}">
         </div>
 
         <script>

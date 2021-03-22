@@ -9,6 +9,7 @@ use App\Order;
 use App\Message;
 use App\User;
 use App\Sweet;
+use App\Category;
 class HomeController extends Controller
 {
     /**
@@ -29,8 +30,9 @@ class HomeController extends Controller
     public function index()
     {
       $order = Order::select('id')->whereDate('created_at', Carbon::today())->get();
-      $message = Message::get();
-      return view('shop.home', ['order' => $order, 'message' => $message]);
+      $message = Message::select('id')->whereDate('created_at', Carbon::today())->get();
+      $categories = Category::all();
+      return view('shop.home', ['order' => $order, 'message' => $message, 'categories' => $categories]);
     }
 
     public function search(Request $request){
@@ -41,7 +43,7 @@ class HomeController extends Controller
         return view('shop.search', ['search' => $search, 'value' => $value, 'name' => $name]);
       }
       if($value === 'お菓子'){
-        $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->get();
+        $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->where('category_id', $request->category)->get();
         return view('shop.search', ['search' => $search, 'value' => $value, 'name' => $name]);
       }
     }

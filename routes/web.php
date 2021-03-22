@@ -11,16 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
 
 // ユーザー側
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::resource('sweets', 'SweetController',['names' => ['index' => 'index','show' => 'show']])->only(['index', 'show']);
 Route::post('sweets', 'SweetController@search')->name('search');
 

@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="{{ asset('/css/user/sweet/show.css') }}">
+</head>
 @extends('layouts.app')
 
 @section('content')
@@ -8,23 +11,12 @@
         </div>
 
         <div class="col-md-12 mt-3 p-5">
-            @if(Auth::user())
-            @foreach($favolite as $favo)
-				@if($like_model->like_exist(Auth::user()->id,$sweet->id))
-					<p class="favorite-marke text-right">
-						<a href="" class="js-like-toggle loved" style="color:gray;" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x"></i></a>
-						<span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
-					</p>
-				@else
-					<p class="favorite-marke text-right">
-						<a href="" class="js-like-toggle" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x" style="color:gray;"></i></a>
-						<span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
-					</p>
-				@endif​
-            @endforeach
-			@endif​
             <div class="row">
-                <img src="{{ $sweet->path }}" class="mx-auto" alt="お菓子画像">
+              @if($sweet->path)
+                <img src="{{ $sweet->path }}" class="mx-auto" alt="お気に入り">
+              @else
+                画像はありません
+              @endif
             </div>
             <table class="table mt-5 mx-auto" style="width:80%">
                 <tr>
@@ -80,5 +72,24 @@
             </form>
         </div>
     </div>
+
+    @if(isset(Auth::user()->id))
+      <form action="#" method="post" class=" mb-5">
+        <h2 style="text-align: center;" class="my-5">コメントする</h2>
+        <input type="hidden" class="sweetId" value="{{ $sweet->id }}">
+        <input type="hidden" class="userId" value="{{ Auth::user()->id }}">
+        <input type="text" class="title row offset-4 col-4 mb-5">
+        <textarea class="body row offset-3 col-6 mb-5" style="height: 150px;"></textarea>
+        <div id="range-group" class="offset-4 col-4 mb-5">
+         <input type="range" id="input-range" class="star" min="1" max="5" value="" />
+        </div>
+        <button type="button" class="comment_btn btn btn-info row offset-5 col-2">コメントをする</button>
+      </form>
+    @elseif(!isset(Auth::user()->id))
+      <h3 style="text-align: center;" class="mt-5">コメントをするにはユーザー登録が必要です。</h3>
+    @endif
+
 </div>
+<script type="module" src="{{mix('/js/star.js')}}"></script>
 @endsection
+
