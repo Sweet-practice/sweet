@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/chat.js": "/js/chat.js",
+    "/js/chat_u.js": "/js/chat_u.js",
     "/js/googlemap.js": "/js/googlemap.js",
     "/js/slide.js": "/js/slide.js"
 }
