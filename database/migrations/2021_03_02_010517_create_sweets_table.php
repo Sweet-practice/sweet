@@ -20,6 +20,7 @@ class CreateSweetsTable extends Migration
             $table->string('name');
             $table->integer('category_id')->unsigned();
             $table->integer('stock');
+            $table->integer('point');
             $table->enum('status', SweetStatus::getKeys());
             $table->string('introduction');
             $table->integer('price');
