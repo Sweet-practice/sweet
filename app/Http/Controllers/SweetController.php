@@ -7,6 +7,7 @@ use App\Library\BaseClass;
 use App\Sweet;
 use App\Category;
 use App\Favolite;
+use App\Review;
 
 class SweetController extends Controller
 {
@@ -42,7 +43,13 @@ class SweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $review = new Review;
+      $review->user_id = $request->userId;
+      $review->sweet_id = $request->sweetId;
+      $review->title = $request->title;
+      $review->body = $request->content;
+      $review->star = $request->star;
+      $review->save();
     }
 
     /**
@@ -55,13 +62,18 @@ class SweetController extends Controller
     {
         $category  = Category::find($sweet->category_id);
         $favolite = $sweet->where('id', '=', $sweet->id)->withCount('favolits')->get();
+        $average = Review::where('sweet_id', $sweet->id)->get()->avg('star');
+        $avg = round($average, 2);
+        // dd($avg);
+        // dd(floor($avg));
+        // dd(substr(strrchr($avg, '.'), 1));
         $like_model = new Favolite;
 
         $data = [
                 'like_model'=>$like_model,
                 'favolite' => $favolite,
             ];
-        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category]);
+        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category, 'avg' => $avg]);
     }
 
     /**

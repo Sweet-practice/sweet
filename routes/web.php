@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::get('orders', 'OrderController@index')->name('user.order.index');
     Route::get('rooms', 'RoomController@index')->name('user.rooms.index');
     Route::post('messages', 'MessageController@store')->name('user.messages.store');
+    Route::post('/comment', 'SweetController@store')->name('comment.store');
 });
 
 
