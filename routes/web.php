@@ -57,4 +57,6 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('messages', 'Shop\MessageController')->only(['index', 'show', 'create', 'store']);
     Route::resource('orders', 'Shop\OrderController')->only(['update']);
     Route::resource('order_details', 'Shop\OrderDetailController')->only(['show', 'edit']);
+    Route::get('courpon/create', 'Shop\CourponController@create')->name('courpon.create');
+    Route::resource('courpons', 'Shop\CourponController')->only(['index', 'show', 'store', 'edit']);
 });
