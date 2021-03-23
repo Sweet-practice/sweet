@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="{{ asset('/css/user/sweet/show.css') }}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 </head>
 @extends('layouts.app')
 
@@ -9,6 +10,18 @@
         <div class="col-md-12 mt-3">
             <h1>{{ $sweet->name }}</h1>
         </div>
+
+      @if($avg == 0.0))
+        <h3>まだ評価されていません</h3>
+      @elseif($avg != 0.0)
+        @for($i = floor($avg); $i >= 1; $i--)
+          <span style="color:#ffd700; font-size: 2rem;"><i class="fas fa-star"></i></span>
+        @endfor
+        @if(substr(strrchr($avg, '.'), 1) >= 5)
+          <span style="color:#ffd700; font-size: 2rem;"><i class="fas fa-star-half-alt"></i></span>
+        @endif
+        <h3>{{ $avg }}</h3>
+      @endif
 
         <div class="col-md-12 mt-3 p-5">
             <div class="row">
@@ -74,9 +87,9 @@
     </div>
 
     @if(isset(Auth::user()->id))
-      <form action="#" method="post" class=" mb-5">
+      <form action="#" method="post" class="mb-5">
         <h2 style="text-align: center;" class="my-5">コメントする</h2>
-        <input type="hidden" class="sweetId" value="{{ $sweet->id }}">
+        <input type="hidden" class="okasi" value="{{ $sweet->id }}">
         <input type="hidden" class="userId" value="{{ Auth::user()->id }}">
         <input type="text" class="title row offset-4 col-4 mb-5">
         <textarea class="body row offset-3 col-6 mb-5" style="height: 150px;"></textarea>

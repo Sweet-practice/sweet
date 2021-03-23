@@ -14,37 +14,35 @@ $(function() {
   });
 });
 
-
-
-$(function() {
-  $('.comment_btn').on('click', function() {
-  e.stopPropagation();
-  sweetId = $('.sweetId').val();
-  userId = $('.userId').val();
-  title = $('.title').val();
-  star = $('.star').val();
-  content = $('.content').val();
-  $.ajax({
-      type: 'POST',
-      url: 'sweets/' + sweetId,
-      data: { shopId: shopId,
-              userId: userId,
-              title: title,
-              star: star,
-              content: content }
-  }).done(function(data){
-    console.log(data);
-    $('#avg').html(data);
-    getComment();
-    $('.title').val('');
-    $('.content').val('');
-    $('.range-group>a').removeClass('on');
-  }).fail(function(){
-    console.log("XMLHttpRequest : " + XMLHttpRequest.status);
-    console.log("textStatus     : " + textStatus);
-    console.log("errorThrown    : " + errorThrown.message);
+$(document).ready(function() {
+  $.ajaxSetup({
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    }
   });
-});
+  $(".comment_btn").click(function() {
+    $.ajax({
+        type: 'POST',
+        url: '/comment',
+        data: { sweetId: $('.okasi').val(),
+                userId: $('.userId').val(),
+                title: $('.title').val(),
+                star: $('.star').val(),
+                content: $('.body').val(),
+              }
+    }).done(function(data){
+      console.log(data);
+      $('#avg').html(data);
+      getComment();
+      $('.title').val('');
+      $('.body').val('');
+      $('#range-group>a').removeClass('on');
+    }).fail(function(){
+      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+      console.log("textStatus     : " + textStatus);
+      console.log("errorThrown    : " + errorThrown.message);
+    });
+  });
 });
 
 
