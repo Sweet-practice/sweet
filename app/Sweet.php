@@ -32,6 +32,7 @@ class Sweet extends Model
 	[
 	  'name',
 	  'stock',
+	  'point',
 	  'introduction',
 	  'price',
 	  'allergy',
