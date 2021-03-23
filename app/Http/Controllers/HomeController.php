@@ -54,6 +54,6 @@ class HomeController extends Controller
         $user = Auth::user();
         $user_form['password'] = bcrypt($request->password);
         $user->fill($user_form)->save();
-        return view('home');
+        return redirect()->action('HomeController@index');
     }
 }

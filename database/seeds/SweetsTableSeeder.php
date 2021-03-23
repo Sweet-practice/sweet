@@ -18,6 +18,7 @@ class SweetsTableSeeder extends Seeder
           'name' => 'パピコ'.$i,
           'category_id' => '1',
           'stock' => '20',
+          'point' => '20',
           'status' => '1',
           'introduction' => 'アイスです。aisudesu.',
           'price' => '200',
