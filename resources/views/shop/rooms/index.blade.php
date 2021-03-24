@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     @foreach($chats as $chat)
-      <a href="{{ route('rooms.show', ['room' => $chat->id]) }}" class="offset-2 col-8 mb-3 btn btn-primary">
+      <a href="{{ route('rooms.show', ['room' => $chat->user_id]) }}" class="offset-2 col-8 mb-3 btn btn-primary">
       	{{ $chat->user->name }}
       	{{ App\Room::unreadCount($chat->user->id) }}
       </a>
