@@ -20,6 +20,7 @@ class GetCourponsTable extends Migration
             $table->unsignedBigInteger('courpon_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('category_id')->unsigned()->nullable();
+            $table->string('name');
             $table->integer('price')->nullable();
             $table->string('parcent')->nullable();
             $table->string('in_force');

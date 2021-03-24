@@ -18,6 +18,7 @@ class CourponsTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('price')->nullable();
             $table->string('parcent')->nullable();
+            $table->string('name');
             $table->string('image_path')->nullable();
             $table->string('in_force');
             $table->timestamps();
