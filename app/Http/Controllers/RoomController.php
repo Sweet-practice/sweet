@@ -20,6 +20,12 @@ class RoomController extends Controller
     {
         $user = Auth::id();
         $messages = Room::where('user_id', $user)->first();
+        if(is_null($messages)){
+            $messages = new Room;
+            $messages->user_id = $user;
+            $messages->shop_id = '1';
+            $messages->save();
+        }
 
         foreach($messages->messages as $message){
             if(is_null($message->user_id) && $message->status === 'Unread'){
