@@ -19,6 +19,7 @@ class OrdersTableSeeder extends Seeder
         'status' => '1',
         'postage' => '540',
         'total_price' => '990'.$i,
+        'total_point' => '100',
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s'),
         ]);

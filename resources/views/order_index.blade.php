@@ -28,7 +28,10 @@
                     </div>
                     <div class="w-50 pl-5">
                         <p>{{\App\Enums\OrderStatus::getStatus($order->status)}}</p>
-                        <p>合計　¥{{ $order->total_price }}　(送料込み)</p>
+                        <div class="row">
+                            <p>合計　¥{{ $order->total_price }}　(送料込み)</p>
+                            <p class="ml-5">取得ポイント　{{ $order->total_point }}pt</p>
+                        </div>
                     </div>
                     <p class="text-right" style="margin-bottom:0;">{{ $order->created_at->format('Y/m/d') }}</p>
                 </div>
