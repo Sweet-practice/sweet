@@ -4,13 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h2>{{ Auth::user()->name }} さんのマイページ</h2>
-            <div class="text-right">
-                <form action="{{ route('search') }}" method="post" id="search">
-                @csrf
-                    <input type="text" name="name" placeholder="商品名検索">
-                    <button type="submit">検索</button>
-                </form>
+            <div class="row">
+                <div>
+                    <h2>{{ Auth::user()->name }} さんのマイページ</h2>
+                    @if(isset($point))
+                    <p>現在の所持ポイント　{{ $point->value }}　pt</p>
+                    @endif
+                </div>
+                <div class="ml-auto">
+                    <form action="{{ route('search') }}" method="post" id="search">
+                    @csrf
+                        <input type="text" name="name" placeholder="商品名検索">
+                        <button type="submit">検索</button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-11 mt-3 mx-auto">
                 <h3>お気に入り商品</h3>
