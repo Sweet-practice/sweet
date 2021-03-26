@@ -73,9 +73,11 @@ class OrderController extends Controller
             $sweet->save();
         }
 
-        $getcourpon = GetCourpon::find($request->courpon);
-        $getcourpon->flag = 'Acquired';
-        $getcourpon->save();
+        if(!is_null($request->courpon)){
+          $getcourpon = GetCourpon::find($request->courpon);
+          $getcourpon->flag = 'Acquired';
+          $getcourpon->save();
+        }
 
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();

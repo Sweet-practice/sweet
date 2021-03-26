@@ -37,9 +37,9 @@ class Cart extends Model
 
   public static function calculation($courpon, $user_id)
   {
+    $carts = Cart::where('user_id',$user_id)->get();
     if($courpon != 0){
       $getcourpon = GetCourpon::find($courpon);
-      $carts = Cart::where('user_id',$user_id)->get();
       $total = 0;
       if(!is_null($getcourpon->parcent)){
         foreach($carts as $cart){
@@ -64,6 +64,12 @@ class Cart extends Model
         }
         return $total;
       }
+    }
+    elseif($courpon == 0){
+      foreach($carts as $sweet){
+        $total += $sweet->sweet->price;
+      }
+      return $total;
     }
   }
 }
