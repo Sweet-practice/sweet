@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Cart;
 use App\Sweet;
+use App\Notification;
 use App\GetCourpon;
 
 
@@ -19,8 +20,9 @@ class CartController extends Controller
 
     public function index()
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $data = Cart::confirm(Auth::user()->id);
-        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2]]);
+        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
     }
 
     /**
@@ -30,10 +32,11 @@ class CartController extends Controller
      */
     public function create(Request $request)
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $cart = new Cart;
         $cart->fill($request->all())->save();
         $data = Cart::confirm(Auth::user()->id);
-        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2]]);
+        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
     }
 
     /**
@@ -77,10 +80,11 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $count = Notification::aggregate(Auth::user()->id);
       $data = Cart::confirm(Auth::user()->id);
       $discount = Cart::calculation($request->courpon, Auth::user()->id);
 
-      return view('cart_index',['discount' => $discount, 'carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2],'courpon' => $request->courpon]);
+      return view('cart_index',['discount' => $discount, 'carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2],'courpon' => $request->courpon, 'count' => $count]);
     }
 
     /**
@@ -91,9 +95,10 @@ class CartController extends Controller
      */
     public function destroy(Request $request,$id)
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $cart = Cart::find($id);
         $cart->delete();
         $carts = Cart::where('user_id',Auth::user()->id)->get();
-        return view('cart_index',['carts' => $carts]);
+        return view('cart_index',['carts' => $carts, 'count' => $count]);
     }
 }

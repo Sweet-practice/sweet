@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Room;
 use App\Message;
 use App\User;
+use App\Notification;
 
 class RoomController extends Controller
 {
@@ -18,6 +19,7 @@ class RoomController extends Controller
      */
     public function index()
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $user = Auth::id();
         $messages = Room::where('user_id', $user)->first();
         if(is_null($messages)){
@@ -33,7 +35,7 @@ class RoomController extends Controller
                 $message->save();
             }
         }
-        return view('room', ['messages' => $messages, 'user' => $user]);
+        return view('room', ['messages' => $messages, 'user' => $user, 'count' => $count]);
     }
 
     /**

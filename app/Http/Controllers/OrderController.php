@@ -10,6 +10,7 @@ use App\Sweet;
 use App\Order;
 use App\OrderDetail;
 use App\GetCourpon;
+use App\Notification;
 use App\Point;
 
 class OrderController extends Controller
@@ -21,9 +22,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();
-        return view('order_index',['orders' => $orders, 'shop' => $shop]);
+        return view('order_index',['orders' => $orders, 'shop' => $shop, 'count' => $count]);
     }
 
     /**
@@ -33,9 +35,10 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+      $count = Notification::aggregate(Auth::user()->id);
       $data = Cart::confirm(Auth::user()->id);
       $point = Point::where('user_id',Auth::user()->id)->first();
-      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon, 'point' => $point]);
+      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon, 'point' => $point, 'count' => $count]);
     }
 
     /**
@@ -47,7 +50,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $carts = Cart::where('user_id',Auth::user()->id)->get();
-
+        $count = Notification::aggregate(Auth::user()->id);
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->postage = $request->postage;
@@ -99,7 +102,7 @@ class OrderController extends Controller
 
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();
-        return view('order_index',['orders' => $orders, 'shop' => $shop]);
+        return view('order_index',['orders' => $orders, 'shop' => $shop, 'count' => $count]);
     }
 
     /**
@@ -110,8 +113,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $order_detail = OrderDetail::where('order_id',$order->id)->get();
-        return view('order_show',['order_detail' => $order_detail, 'order' => $order]);
+        return view('order_show',['order_detail' => $order_detail, 'order' => $order, 'count' => $count]);
     }
 
     /**

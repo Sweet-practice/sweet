@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Courpon;
 use App\GetCourpon;
 use App\Category;
+use App\Notification;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +40,7 @@ class CourponController extends Controller
 
   	$courpon = new Courpon;
   	$courpon->category_id = $request->category_id;
-      $courpon->name = $request->name;
+    $courpon->name = $request->name;
   	if($request->method == 'price'){
   		$courpon->price = $request->content;
   	}elseif($request->method == 'parcent'){
@@ -47,6 +49,17 @@ class CourponController extends Controller
   	$courpon->in_force = $request->in_force;
   	$courpon->image_path = $path;
   	$courpon->save();
+
+    $users = User::where('delete_flug', 'activeUser')->get();
+    foreach($users as $user){
+      $notification = new Notification;
+      $notification->user_id = $user->id;
+      $notification->courpon_id = $courpon->id;
+      $notification->title = '新しいクーポンが発行されました！';
+      $notification->content = $courpon->name.'というクーポンです！早速使ってみましょう！';
+      $notification->save();
+    }
+
     $courpons = Courpon::all();
     return view('shop/courpons.index',['courpons' => $courpons]);
   }

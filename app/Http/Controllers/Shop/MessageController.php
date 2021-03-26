@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Message;
+use App\Room;
 use Illuminate\Support\Facades\Auth;
+use App\Notification;
 use App\Events\MessageSent;
 
 class MessageController extends Controller
@@ -43,6 +45,14 @@ class MessageController extends Controller
       $message->content = $request->content;
       $message->save();
       event(new MessageSent($message));
+
+      $room = Room::find($message->room_id);
+      $notification = new Notification;
+      $notification->user_id = $room->user_id;
+      $notification->message_id = $message->id;
+      $notification->title = "お店から返信が来ました！";
+      $notification->content = "メッセージのご確認をお願いします。";
+      $notification->save();
     }
 
     /**

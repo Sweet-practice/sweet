@@ -30,7 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $notification = Notification::aggregate(Auth::user()->id);
+        $count = Notification::aggregate(Auth::user()->id);
         $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
             $q->where('user_id', Auth::user()->id);})->get();
         $like_model = new Favolite;
@@ -48,7 +48,7 @@ class HomeController extends Controller
                 'randoms'=>$randoms,
                 'point' => $point,
         ];
-      return view('home', $data, ['shop' => $shop]);
+      return view('home', $data, ['shop' => $shop, 'count' => $count]);
     }
 
     public function edit()

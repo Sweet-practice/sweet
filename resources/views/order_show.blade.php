@@ -14,7 +14,7 @@
                 @foreach ($order_detail as $order_d)
                     <div class="m-3 row border-bottom pb-1">
                         <img src="{{ $order_d->sweet->path }}" class="w-25" alt="画像">
-                        <div class="w-50 pl-5">
+                          <div class="w-50 pl-5">
                             <p style="font-size:20px">{{ $order_d->sweet_name }}</p>
                             <p>購入数　{{ $order_d->amout }}個</p>
                             <p>計　¥{{ $order_d->price }}</p>

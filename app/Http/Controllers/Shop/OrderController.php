@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Enums\OrderStatus;
 use App\Order;
 use App\OrderDetail;
+use App\Notification;
 
 class OrderController extends Controller
 {
@@ -45,6 +46,16 @@ class OrderController extends Controller
     $order = Order::find($request->order_id);
     $order->status = $request->status;
     $order->save();
+
+    if($order->status == 'Shipping'){
+      $notification = new Notification;
+      $notification->user_id = $order->user_id;
+      $notification->order_id = $order->id;
+      $notification->title = 'ご注文の商品が発送されました！';
+      $notification->content = 'ご注文の商品が発送されました！２日ほどお待ちください。';
+      $notification->save();
+    }
+
     $status = OrderStatus::toSelectArray();
 
     return view('shop/order_details.edit', ['order_details' => $order, 'status' => $status]);

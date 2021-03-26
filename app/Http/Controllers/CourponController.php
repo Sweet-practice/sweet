@@ -6,20 +6,23 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Courpon;
 use App\GetCourpon;
+use App\Notification;
 
 class CourponController extends Controller
 {
   public function index()
   {
+    $count = Notification::aggregate(Auth::user()->id);
     $courpons = Courpon::all();
-    return view('user/courpons.index',['courpons' => $courpons]);
+    return view('user/courpons.index',['courpons' => $courpons, 'count' => $count]);
   }
 
   public function show($id)
   {
+    $count = Notification::aggregate(Auth::user()->id);
     $courpon = Courpon::find($id);
     $get_courpon = GetCourpon::where("courpon_id", $id)->first();
-    return view('user/courpons.show',['courpon' => $courpon, 'get_courpon' => $get_courpon]);
+    return view('user/courpons.show',['courpon' => $courpon, 'get_courpon' => $get_courpon, 'count' => $count]);
   }
 
   public function store(Request $request)
