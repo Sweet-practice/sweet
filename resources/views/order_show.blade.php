@@ -24,7 +24,8 @@
                         ?>
                     </div>
                 @endforeach
-                <p>合計　¥{{ $sum }}</p>
+                <p>取得ポイント　{{ $order->total_point }}pt</p>
+                <p>合計　¥{{ $sum }}<!-- 　（使用ポイント{{ $order->total_point }}pt） --></p>
                 <p>送料　¥220</p>
                 <p style="font-size:30px">合計　¥{{ $sum+220 }}</p>
             </div>
