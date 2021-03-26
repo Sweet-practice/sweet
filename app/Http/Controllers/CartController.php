@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Cart;
 use App\Sweet;
+use App\GetCourpon;
+
 
 class CartController extends Controller
 {
@@ -14,17 +16,11 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        $carts = Cart::where('user_id',Auth::user()->id)->get();
-        foreach ($carts as $cart){
-            if($cart->sweet->stock - $cart->amout < 0){
-                $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
-            return view('cart_index',['carts' => $carts,'stock' => $stock]);
-
-            }
-        }
-        return view('cart_index',['carts' => $carts]);
+        $data = Cart::confirm(Auth::user()->id);
+        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2]]);
     }
 
     /**
@@ -36,16 +32,8 @@ class CartController extends Controller
     {
         $cart = new Cart;
         $cart->fill($request->all())->save();
-        
-        $carts = Cart::where('user_id',Auth::user()->id)->get();
-        foreach ($carts as $cart){
-            if($cart->sweet->stock - $cart->amout < 0){
-                $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
-            return view('cart_index',['carts' => $carts,'stock' => $stock]);
-
-            }
-        }
-        return view('cart_index',['carts' => $carts]);
+        $data = Cart::confirm(Auth::user()->id);
+        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2]]);
     }
 
     /**
@@ -67,7 +55,6 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -90,7 +77,10 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $data = Cart::confirm(Auth::user()->id);
+      $discount = Cart::calculation($request->courpon, Auth::user()->id);
+
+      return view('cart_index',['discount' => $discount, 'carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2],'courpon' => $request->courpon]);
     }
 
     /**

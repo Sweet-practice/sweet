@@ -38,12 +38,46 @@
                     $sum += $total;
                 ?>
             @endforeach
-            <p style="font-size:30px">合計　¥{{ $sum }}</p>
-            @if(isset($stock))
+
+            <form action="{{ route('carts.update', ['cart' => Auth::user()->id]) }}" method="post">
+              @method('put')
+              @csrf
+              <input type="hidden" name="total" value="{{ $sum }}">
+              <select class="row offset-4 col-4 mb-5" name="courpon">
+                <option value="0">クーポンを使用しない</option>
+                @foreach($getcourpons as $getcourpon)
+                  <option value="{{ $getcourpon->id }}">
+                    {{ $getcourpon->name }}
+                    @if(!is_null($getcourpon->price))
+                      {{ $getcourpon->price }}円引き
+                    @elseif(!is_null($getcourpon->parcent))
+                      {{ $getcourpon->parcent }}引き
+                    @endif
+                  </option>
+                @endforeach
+              </select>
+              <button type="submit" class="btn btn-primary">クーポンを使う</button>
+            </form>
+
+            @if(isset($discount))
+              <p style="font-size:30px">合計　¥{{ $discount }}</p>
+            @else
+              <p style="font-size:30px">合計　¥{{ $sum }}</p>
+            @endif
+            @if(!empty($stock))
                 <p style="color:red;">在庫が不足している商品があるためご購入いただけません。</p>
                 <p>次の入荷をお待ちください。</p>
             @else
-                <a href="{{ route('orders.create') }}" class="text-right btn btn-primary">購入手続きへ進む</a>
+              <form action="{{ route('orders.create') }}">
+                @csrf
+                @if(isset($discount))
+                  <input type="hidden" name="total" value="{{ $discount }}">
+                  <input type="hidden" name="courpon" value="{{ $courpon }}">
+                @else
+                  <input type="hidden" name="courpon" value="{{ $sum }}">
+                @endif
+                <button type="submit" class="text-right btn btn-primary">購入手続きへ進む</button>
+              </form>
             @endif
         @endif
         </div>

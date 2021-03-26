@@ -58,4 +58,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Favolite');
     }
 
+    public function getcourpons()
+    {
+        return $this->hasMany('App\GetCourpon');
+    }
+
 }

@@ -27,6 +27,11 @@ class Sweet extends Model
       return $this->hasMany('App\OrderDetail');
   }
 
+  public function cart()
+  {
+    return $this->hasOne('App\Cart');
+  }
+
 	protected $table = 'sweets';
 	protected $fillable =
 	[

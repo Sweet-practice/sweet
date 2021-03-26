@@ -9,6 +9,7 @@ use App\Cart;
 use App\Sweet;
 use App\Order;
 use App\OrderDetail;
+use App\GetCourpon;
 
 class OrderController extends Controller
 {
@@ -29,16 +30,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $carts = Cart::where('user_id',Auth::user()->id)->get();
-        foreach ($carts as $cart){
-            if($cart->sweet->stock - $cart->amout < 0){
-                $stock = 'こちらの商品の在庫が不足しているためご購入いただけません。';
-                return view('order_create',['carts' => $carts,'stock' => $stock]);
-            }
-        }
-        return view('order_create',['carts' => $carts]);
+      $data = Cart::confirm(Auth::user()->id);
+      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon]);
     }
 
     /**
@@ -78,6 +73,10 @@ class OrderController extends Controller
             $sweet->save();
         }
 
+        $getcourpon = GetCourpon::find($request->courpon);
+        $getcourpon->flag = 'Acquired';
+        $getcourpon->save();
+
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();
         return view('order_index',['orders' => $orders, 'shop' => $shop]);
@@ -115,7 +114,6 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**

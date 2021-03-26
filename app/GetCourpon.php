@@ -18,6 +18,6 @@ class GetCourpon extends Model
 
     public function courpons()
     {
-        return $this->hasMany('App\Courpon');
+        return $this->belongsTo('App\Courpon');
     }
 }

@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/googlemap.js', 'public/js')
    .js('resources/js/star.js', 'public/js')
    .js('resources/js/chat_u.js', 'public/js')
+   .js('resources/js/courpon.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .version();
 
