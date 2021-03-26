@@ -10,6 +10,7 @@ use App\Sweet;
 use App\Order;
 use App\OrderDetail;
 use App\GetCourpon;
+use App\Point;
 
 class OrderController extends Controller
 {
@@ -50,6 +51,7 @@ class OrderController extends Controller
         $order->user_id = Auth::user()->id;
         $order->postage = $request->postage;
         $order->total_price = $request->total_price;
+        $order->total_point = $request->total_point;
         $order->save();
         $orderId = $order->id;
 
@@ -72,6 +74,18 @@ class OrderController extends Controller
             }
             $sweet->save();
         }
+
+        $points = Point::where('user_id',Auth::user()->id)->first();
+        if(empty($points)){
+            $point = new Point;
+            $point->user_id = Auth::user()->id;
+            $point->value = $request->total_point;
+            $point->save();
+        }else{
+            $points->value += $request->total_point;
+            $points->save();
+        }
+        $request->session()->regenerateToken();
 
         $getcourpon = GetCourpon::find($request->courpon);
         $getcourpon->flag = 'Acquired';

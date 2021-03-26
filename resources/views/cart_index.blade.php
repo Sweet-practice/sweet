@@ -15,6 +15,7 @@
         @else
             <?php
                 $sum = 0;
+                $p_sum = 0;
             ?>
             @foreach ($carts as $cart)
                 <div class="m-3 row border-bottom pb-1">
@@ -23,6 +24,7 @@
                         <a href="{{ route('show', ['sweet' => $cart->sweet->id]) }}" class="">
                             <p style="font-size:20px">{{ $cart->sweet->name }}</p></a>
                         <p>購入数　{{ $cart->amout }}個</p>
+                        <p>ポイント数　{{ $p_total = $cart->amout*$cart->sweet->point }}pt</p>
                         <p>小計　¥{{ $total = $cart->amout*$cart->sweet->price }}</p>
                         @if($cart->sweet->stock - $cart->amout < 0)
                             <span style="color:red;">{{ $stock }}</span>
@@ -36,6 +38,7 @@
                 </div>
                 <?php
                     $sum += $total;
+                    $p_sum += $p_total;
                 ?>
             @endforeach
 
@@ -64,6 +67,7 @@
             @else
               <p style="font-size:30px">合計　¥{{ $sum }}</p>
             @endif
+            <p>ポイント合計　{{ $p_sum }}pt</p>
             @if(!empty($stock))
                 <p style="color:red;">在庫が不足している商品があるためご購入いただけません。</p>
                 <p>次の入荷をお待ちください。</p>
