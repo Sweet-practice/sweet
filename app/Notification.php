@@ -10,4 +10,9 @@ class Notification extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    public static function aggregate($id)
+    {
+    	
+    }
 }

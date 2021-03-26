@@ -75,6 +75,14 @@ class OrderController extends Controller
             $sweet->save();
         }
 
+        // if文追加
+        if(!is_null($request->courpon)){
+          $getcourpon = GetCourpon::find($request->courpon);
+          $getcourpon->flag = 'Acquired';
+          $getcourpon->save();
+        }
+       //  ここまで
+
         $points = Point::where('user_id',Auth::user()->id)->first();
         if(empty($points)){
             $point = new Point;
@@ -90,6 +98,7 @@ class OrderController extends Controller
         $getcourpon = GetCourpon::find($request->courpon);
         $getcourpon->flag = 'Acquired';
         $getcourpon->save();
+
 
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();

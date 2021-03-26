@@ -29,6 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $notification = Notification::aggregate(Auth::user()->id);
         $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
             $q->where('user_id', Auth::user()->id);})->get();
         $like_model = new Favolite;

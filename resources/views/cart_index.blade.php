@@ -78,7 +78,7 @@
                   <input type="hidden" name="total" value="{{ $discount }}">
                   <input type="hidden" name="courpon" value="{{ $courpon }}">
                 @else
-                  <input type="hidden" name="courpon" value="{{ $sum }}">
+                  <input type="hidden" name="total" value="{{ $sum }}">
                 @endif
                 <button type="submit" class="text-right btn btn-primary">購入手続きへ進む</button>
               </form>
