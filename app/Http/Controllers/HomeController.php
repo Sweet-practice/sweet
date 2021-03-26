@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Sweet;
 use App\Favolite;
+use App\Notification;
 
 class HomeController extends Controller
 {
@@ -28,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $notification = Notification::aggregate(Auth::user()->id);
+        $count = Notification::aggregate(Auth::user()->id);
         $sweets = Sweet::withCount('favolits')->whereHas('favolits', function($q){
             $q->where('user_id', Auth::user()->id);})->get();
         $like_model = new Favolite;
@@ -40,7 +41,7 @@ class HomeController extends Controller
                 'like_model'=>$like_model,
                 'randoms'=>$randoms,
         ];
-      return view('home', $data, ['shop' => $shop]);
+      return view('home', $data, ['shop' => $shop, 'count' => $count]);
     }
 
     public function edit()

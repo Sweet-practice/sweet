@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::post('messages', 'MessageController@store')->name('user.messages.store');
     Route::post('/comment', 'SweetController@store')->name('comment.store');
     Route::resource('courpon', 'CourponController')->only(['index', 'show', 'store']);
-    Route::resource('notifications', 'NotificationController')->only(['index']);
+    Route::resource('notification', 'NotificationController')->only(['index', 'show']);
 });
 
 

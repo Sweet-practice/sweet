@@ -10,6 +10,7 @@ use App\Sweet;
 use App\Order;
 use App\OrderDetail;
 use App\GetCourpon;
+use App\Notification;
 
 class OrderController extends Controller
 {
@@ -92,8 +93,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $order_detail = OrderDetail::where('order_id',$order->id)->get();
-        return view('order_show',['order_detail' => $order_detail, 'order' => $order]);
+        return view('order_show',['order_detail' => $order_detail, 'order' => $order, 'count' => $count]);
     }
 
     /**

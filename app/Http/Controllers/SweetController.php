@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\BaseClass;
+use Auth;
 use App\Sweet;
 use App\Category;
 use App\Favolite;
 use App\Review;
+use App\Notification;
 
 class SweetController extends Controller
 {
@@ -18,11 +20,12 @@ class SweetController extends Controller
      */
     public function index()
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $shop = BaseClass::terminaltype();
         $categorys  = Category::all();
         $order_details = Sweet::withCount('orderDetails')->orderBy('order_details_count', 'desc')->limit(5)->get();
         $sweets = Sweet::withCount('favolits')->orderBy('favolits_count', 'desc')->limit(5)->get();
-        return view('sweet', ['categorys' => $categorys, 'shop' => $shop, 'sweets' => $sweets, 'order_details' => $order_details]);
+        return view('sweet', ['categorys' => $categorys, 'shop' => $shop, 'sweets' => $sweets, 'order_details' => $order_details, 'count' => $count]);
     }
 
     /**
@@ -60,6 +63,7 @@ class SweetController extends Controller
      */
     public function show(Sweet $sweet)
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $category  = Category::find($sweet->category_id);
         $favolite = $sweet->where('id', '=', $sweet->id)->withCount('favolits')->get();
         $average = Review::where('sweet_id', $sweet->id)->get()->avg('star');
@@ -73,7 +77,7 @@ class SweetController extends Controller
                 'like_model'=>$like_model,
                 'favolite' => $favolite,
             ];
-        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category, 'avg' => $avg]);
+        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category, 'avg' => $avg, 'count' => $count]);
     }
 
     /**

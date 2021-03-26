@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Sweet;
+use App\User;
 use App\Image;
+use App\Notification;
 use App\Http\Requests\SweetRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +59,16 @@ class SweetController extends Controller
       $input->allergy = $request->allergy;
       $input->path = $path;
       $input->save();
+
+      $users = User::where('delete_flug', 'activeUser')->get();
+      foreach($users as $user){
+        $notification = new Notification;
+        $notification->user_id = $user->id;
+        $notification->sweet_id = $input->id;
+        $notification->title = '新しいお菓子が追加されました！';
+        $notification->content = $input->name.'というお菓子です！';
+        $notification->save();
+      }
 
       $sub_images = $request->file('sub_image');
 
