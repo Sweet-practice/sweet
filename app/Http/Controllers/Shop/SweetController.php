@@ -53,6 +53,7 @@ class SweetController extends Controller
       $input->stock = $request->stock;
       $input->introduction = $request->introduction;
       $input->price = $request->price;
+      $input->point = $request->point;
       $input->allergy = $request->allergy;
       $input->path = $path;
       $input->save();
