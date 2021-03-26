@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::post('/home/edit', 'HomeController@update')->name('update');
     Route::resource('favorites', 'FavoriteController')->only(['index']);
     Route::post('/ajaxlike', 'FavoriteController@ajaxlike')->name('favorits.ajaxlike');
-    Route::resource('carts', 'CartController')->only(['index']);
+    Route::resource('carts', 'CartController')->only(['index', 'update']);
     Route::post('carts', 'CartController@create')->name('carts.create');
     Route::delete('carts/{id}', 'CartController@destroy')->name('carts.destroy');
     Route::resource('orders', 'OrderController')->only(['create', 'store', 'show']);
@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:user'], function() {
     Route::get('rooms', 'RoomController@index')->name('user.rooms.index');
     Route::post('messages', 'MessageController@store')->name('user.messages.store');
     Route::post('/comment', 'SweetController@store')->name('comment.store');
+    Route::resource('courpon', 'CourponController')->only(['index', 'show', 'store']);
 });
 
 
@@ -58,5 +59,5 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth:shop'], function() {
     Route::resource('orders', 'Shop\OrderController')->only(['update']);
     Route::resource('order_details', 'Shop\OrderDetailController')->only(['show', 'edit']);
     Route::get('courpon/create', 'Shop\CourponController@create')->name('courpon.create');
-    Route::resource('courpons', 'Shop\CourponController')->only(['index', 'show', 'store', 'edit']);
+    Route::resource('courpons', 'Shop\CourponController');
 });

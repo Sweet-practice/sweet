@@ -10,6 +10,7 @@
       	@endforeach
       </select>
       <input type="text" name="stock" class="row offset-4 col-4 mb-5" placeholder="個数">
+      <input type="text" name="point" class="row offset-4 col-4 mb-5" placeholder="ポイント">
       <input type="text" name="introduction" placeholder="商品説明" class="row offset-4 col-4 mb-5">
       <input type="text" name="price" placeholder="価格" class="row offset-4 col-4 mb-5">
       <input type="text" name="allergy" placeholder="アレルギー" class="row offset-4 col-4 mb-5">
