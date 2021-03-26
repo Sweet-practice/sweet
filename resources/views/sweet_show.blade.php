@@ -11,7 +11,7 @@
             <h1>{{ $sweet->name }}</h1>
         </div>
 
-      @if($avg == 0.0))
+      @if($avg == 0.0)
         <h3>まだ評価されていません</h3>
       @elseif($avg != 0.0)
         @for($i = floor($avg); $i >= 1; $i--)
@@ -24,6 +24,22 @@
       @endif
 
         <div class="col-md-12 mt-3 p-5">
+            @if(Auth::user())
+                @foreach($favolite as $favo)
+            @if($like_model->like_exist(Auth::user()->id,$sweet->id))
+              <p class="favorite-marke text-right">
+                <a href="" class="js-like-toggle loved" style="color:gray;" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x"></i></a>
+                <span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
+              </p>
+            @else
+              <p class="favorite-marke text-right">
+                <a href="" class="js-like-toggle" data-sweetid="{{ $sweet->id }}"><i class="fas fa-heart fa-2x" style="color:gray;"></i></a>
+                <span class="likesCount" style="font-size:20px;">{{$favo->favolits_count}}</span>
+              </p>
+            @endif​
+                @endforeach
+          @endif​
+
             <div class="row">
               @if($sweet->path)
                 <img src="{{ $sweet->path }}" class="mx-auto" alt="お気に入り">
@@ -31,7 +47,8 @@
                 画像はありません
               @endif
             </div>
-            <table class="table mt-5 mx-auto" style="width:80%">
+            <p class="text-right">ポイント数　{{ $sweet->point }}pt</p>
+            <table class="table mt-4 mx-auto" style="width:80%">
                 <tr>
                     <td class="pl-5">商品名</td>
                     <td style="width:50%">{{ $sweet->name }}</td>

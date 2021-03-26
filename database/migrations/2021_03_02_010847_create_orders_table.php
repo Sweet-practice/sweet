@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->enum('status', OrderStatus::getKeys());
             $table->integer('postage');
             $table->integer('total_price');
+            $table->integer('total_point');
+            $table->integer('use_point')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -115,6 +115,7 @@ class SweetController extends Controller
     }
 
     public function search(Request $request){
+        $count = Notification::aggregate(Auth::user()->id);
         $data = [];
         // ユーザの投稿の一覧を作成日時の降順で取得
         //withCount('テーブル名')とすることで、リレーションの数も取得できます。
@@ -131,13 +132,13 @@ class SweetController extends Controller
         if(isset($request['name'])){
             $name = $request['name'];
             $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->withCount('favolits')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name]);
+            return view('search', $data, ['search' => $search, 'name' => $name, 'count' => $count]);
         }
         elseif(isset($request['category'])){
             $id = $request['category'];
             $name = $request['category_name'];
             $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->withCount('favolits')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name, 'id' => $id]);
+            return view('search', $data, ['search' => $search, 'name' => $name, 'id' => $id, 'count' => $count]);
         }
     }
 }

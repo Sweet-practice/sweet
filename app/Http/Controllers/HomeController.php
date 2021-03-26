@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Sweet;
 use App\Favolite;
+use App\Point;
 use App\Notification;
 
 class HomeController extends Controller
@@ -36,10 +37,16 @@ class HomeController extends Controller
         $shop = BaseClass::terminaltype();
 
         $randoms = Sweet::inRandomOrder()->limit(5)->get();
+        $point = Point::where('user_id', Auth::user()->id)->first();
+        if($point->updated_at->format('Y-m-d') <= date("Y-m-d",strtotime("-1 year"))){
+            $point->value = 0;
+            $point->save();
+        }
         $data = [
                 'sweets' => $sweets,
                 'like_model'=>$like_model,
                 'randoms'=>$randoms,
+                'point' => $point,
         ];
       return view('home', $data, ['shop' => $shop, 'count' => $count]);
     }

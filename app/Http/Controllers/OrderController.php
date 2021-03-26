@@ -11,6 +11,7 @@ use App\Order;
 use App\OrderDetail;
 use App\GetCourpon;
 use App\Notification;
+use App\Point;
 
 class OrderController extends Controller
 {
@@ -21,9 +22,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $count = Notification::aggregate(Auth::user()->id);
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();
-        return view('order_index',['orders' => $orders, 'shop' => $shop]);
+        return view('order_index',['orders' => $orders, 'shop' => $shop, 'count' => $count]);
     }
 
     /**
@@ -33,8 +35,10 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+      $count = Notification::aggregate(Auth::user()->id);
       $data = Cart::confirm(Auth::user()->id);
-      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon]);
+      $point = Point::where('user_id',Auth::user()->id)->first();
+      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon, 'point' => $point, 'count' => $count]);
     }
 
     /**
@@ -46,11 +50,13 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $carts = Cart::where('user_id',Auth::user()->id)->get();
-
+        $count = Notification::aggregate(Auth::user()->id);
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->postage = $request->postage;
-        $order->total_price = $request->total_price;
+        $order->total_price = $request->total_price - $request->use_point;
+        $order->total_point = $request->total_point;
+        $order->use_point = $request->use_point;
         $order->save();
         $orderId = $order->id;
 
@@ -74,15 +80,29 @@ class OrderController extends Controller
             $sweet->save();
         }
 
+        // if文追加
         if(!is_null($request->courpon)){
           $getcourpon = GetCourpon::find($request->courpon);
           $getcourpon->flag = 'Acquired';
           $getcourpon->save();
         }
+       //  ここまで
+
+        $points = Point::where('user_id',Auth::user()->id)->first();
+        if(empty($points)){
+            $point = new Point;
+            $point->user_id = Auth::user()->id;
+            $point->value = $request->total_point;
+            $point->save();
+        }else{
+            $points->value += $request->total_point - $request->use_point;
+            $points->save();
+        }
+        $request->session()->regenerateToken();
 
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();
-        return view('order_index',['orders' => $orders, 'shop' => $shop]);
+        return view('order_index',['orders' => $orders, 'shop' => $shop, 'count' => $count]);
     }
 
     /**
