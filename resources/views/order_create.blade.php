@@ -49,6 +49,9 @@
                 <input type="hidden" name="total_price" value="{{ $discount+220 }}">
                 <input type="hidden" name="courpon" id="courpon" value="{{ $courpon }}">
                 <input type="hidden" name="total_point" value="{{ $p_sum }}">
+                <label>所持ポイントを使用する：</label>
+                <input type="number" name="use_point" min="0" max="{{ $point->value }}" style="width:60px"> pt
+                <br>
                 <button type="submit" class="btn btn-primary">購入内容を確定する</button>
             </form>
             @endif

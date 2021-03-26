@@ -34,7 +34,8 @@ class OrderController extends Controller
     public function create(Request $request)
     {
       $data = Cart::confirm(Auth::user()->id);
-      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon]);
+      $point = Point::where('user_id',Auth::user()->id)->first();
+      return view('order_create',['carts' => $data[0],'getcourpons' => $data[2], 'discount' => $request->total, 'courpon' => $request->courpon, 'point' => $point]);
     }
 
     /**
@@ -50,8 +51,9 @@ class OrderController extends Controller
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->postage = $request->postage;
-        $order->total_price = $request->total_price;
+        $order->total_price = $request->total_price - $request->use_point;
         $order->total_point = $request->total_point;
+        $order->use_point = $request->use_point;
         $order->save();
         $orderId = $order->id;
 
@@ -90,15 +92,10 @@ class OrderController extends Controller
             $point->value = $request->total_point;
             $point->save();
         }else{
-            $points->value += $request->total_point;
+            $points->value += $request->total_point - $request->use_point;
             $points->save();
         }
         $request->session()->regenerateToken();
-
-        $getcourpon = GetCourpon::find($request->courpon);
-        $getcourpon->flag = 'Acquired';
-        $getcourpon->save();
-
 
         $orders = Order::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->get();
         $shop = BaseClass::terminaltype();

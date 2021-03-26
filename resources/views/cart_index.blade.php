@@ -70,7 +70,7 @@
             <p>ポイント合計　{{ $p_sum }}pt</p>
             @if(!empty($stock))
                 <p style="color:red;">在庫が不足している商品があるためご購入いただけません。</p>
-                <p>次の入荷をお待ちください。</p>
+                <p>数量を減らしてご購入されるか、次の入荷をお待ちください。</p>
             @else
               <form action="{{ route('orders.create') }}">
                 @csrf

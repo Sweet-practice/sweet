@@ -8,7 +8,7 @@
                 <div>
                     <h2>{{ Auth::user()->name }} さんのマイページ</h2>
                     @if(isset($point))
-                    <p>現在の所持ポイント　{{ $point->value }}　pt</p>
+                    <p>現在の所持ポイント　{{ $point->value }} pt　　有効期限：最終買い物日から1年後（自動的に消失します）</p>
                     @endif
                 </div>
                 <div class="ml-auto">
