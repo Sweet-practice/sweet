@@ -49,6 +49,10 @@ class SweetController extends Controller
       $upload_info = Storage::disk('s3')->putFile('/test', $request->file('file'), 'public');
       //S3へのファイルアップロード処理の時の情報が格納された変数$pathを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
       $path = Storage::disk('s3')->url($upload_info);
+
+      $video = Storage::disk('s3')->putFile('/video', $request->file('video'), 'public');
+      $video = Storage::disk('s3')->url($video);
+
       $input = new Sweet();
       $input->name = $request->name;
       $input->category_id = $request->category_id;
@@ -58,6 +62,7 @@ class SweetController extends Controller
       $input->point = $request->point;
       $input->allergy = $request->allergy;
       $input->path = $path;
+      $input->video = $video;
       $input->save();
 
       $users = User::where('delete_flug', 'activeUser')->get();

@@ -17,6 +17,13 @@
       <img src="{{ $sub_image->url }}" class="slide slide{{ $key + 1}}">
     @endforeach
   </div>
+
+  <video controls width="400" class="mt-5">
+
+      <source src="{{ $sweet->video }}">
+      Sorry, your browser doesn't support embedded videos.
+  </video>
+
   <script src="{{mix('/js/slide.js')}}"></script>
 </body>
 @endsection

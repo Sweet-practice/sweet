@@ -24,7 +24,7 @@ class SweetRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required | max:10',
+            'name' => 'required | max:100',
             'category_id' => 'required',
             'stock' => 'required',
             'introduction' => 'required | max:60',
