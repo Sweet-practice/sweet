@@ -15,7 +15,7 @@
     また、それぞれが実装してみたい機能やAPIを組み込んだりもしています。
    
 ##  テーブル設計
-<img width="813" alt="スクリーンショット 2021-03-16 0 27 45" src="https://user-images.githubusercontent.com/59087539/111178550-a14fbc00-85ee-11eb-8217-7fed807bf830.png">
+<img width="945" alt="スクリーンショット 2021-03-29 9 05 47" src="https://user-images.githubusercontent.com/59087539/112773026-34690700-906f-11eb-9568-b0d5ab04381c.png">
    
 ## sweetの機能
 ###   １、条件検索機能
