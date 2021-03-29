@@ -48,7 +48,7 @@ class HomeController extends Controller
                 'randoms'=>$randoms,
                 'point' => $point,
         ];
-      return view('home', $data, ['shop' => $shop, 'count' => $count]);
+      return view('user/users/home', $data, ['shop' => $shop, 'count' => $count]);
     }
 
     public function edit()

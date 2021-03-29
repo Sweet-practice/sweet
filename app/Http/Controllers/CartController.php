@@ -22,7 +22,7 @@ class CartController extends Controller
     {
         $count = Notification::aggregate(Auth::user()->id);
         $data = Cart::confirm(Auth::user()->id);
-        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
+        return view('user/carts/cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
     }
 
     /**
@@ -36,7 +36,7 @@ class CartController extends Controller
         $cart = new Cart;
         $cart->fill($request->all())->save();
         $data = Cart::confirm(Auth::user()->id);
-        return view('cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
+        return view('user/carts/cart_index',['carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2], 'count' => $count]);
     }
 
     /**
@@ -84,7 +84,7 @@ class CartController extends Controller
       $data = Cart::confirm(Auth::user()->id);
       $discount = Cart::calculation($request->courpon, Auth::user()->id);
 
-      return view('cart_index',['discount' => $discount, 'carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2],'courpon' => $request->courpon, 'count' => $count]);
+      return view('user/carts/cart_index',['discount' => $discount, 'carts' => $data[0],'stock' => $data[1],'getcourpons' => $data[2],'courpon' => $request->courpon, 'count' => $count]);
     }
 
     /**
@@ -99,6 +99,6 @@ class CartController extends Controller
         $cart = Cart::find($id);
         $cart->delete();
         $carts = Cart::where('user_id',Auth::user()->id)->get();
-        return view('cart_index',['carts' => $carts, 'count' => $count]);
+        return view('user/carts/cart_index',['carts' => $carts, 'count' => $count]);
     }
 }
