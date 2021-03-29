@@ -44,7 +44,7 @@ class Cart extends Model
       if(!is_null($getcourpon->parcent)){
         foreach($carts as $cart){
           if(is_null($getcourpon->category_id) or $cart->sweet->category_id == $getcourpon->category_id){
-            $total += $cart->sweet->price - ($cart->sweet->price * $getcourpon->parcent / 100);
+            $total += ($cart->sweet->price * $cart->amout) - (($cart->sweet->price * $cart->amout) * $getcourpon->parcent / 100);
           }
           else{
             $total += $cart->sweet->price;
@@ -67,7 +67,7 @@ class Cart extends Model
     }
     elseif($courpon == 0){
       foreach($carts as $sweet){
-        $total += $sweet->sweet->price;
+        $total += $sweet->sweet->price * $sweet->amout;
       }
       return $total;
     }
