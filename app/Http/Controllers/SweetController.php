@@ -20,12 +20,16 @@ class SweetController extends Controller
      */
     public function index()
     {
-        $count = Notification::aggregate(Auth::user()->id);
+        if(Auth::user()){
+            $count = Notification::aggregate(Auth::user()->id);
+        }else{
+            $count = "";
+        }
         $shop = BaseClass::terminaltype();
         $categorys  = Category::all();
         $order_details = Sweet::withCount('orderDetails')->orderBy('order_details_count', 'desc')->limit(5)->get();
         $sweets = Sweet::withCount('favolits')->orderBy('favolits_count', 'desc')->limit(5)->get();
-        return view('sweet', ['categorys' => $categorys, 'shop' => $shop, 'sweets' => $sweets, 'order_details' => $order_details, 'count' => $count]);
+        return view('user/sweets/sweet', ['categorys' => $categorys, 'shop' => $shop, 'sweets' => $sweets, 'order_details' => $order_details, 'count' => $count]);
     }
 
     /**
@@ -63,7 +67,11 @@ class SweetController extends Controller
      */
     public function show(Sweet $sweet)
     {
-        $count = Notification::aggregate(Auth::user()->id);
+        if(Auth::user()){
+            $count = Notification::aggregate(Auth::user()->id);
+        }else{
+            $count = "";
+        }
         $category  = Category::find($sweet->category_id);
         $favolite = $sweet->where('id', '=', $sweet->id)->withCount('favolits')->get();
         $average = Review::where('sweet_id', $sweet->id)->get()->avg('star');
@@ -77,7 +85,7 @@ class SweetController extends Controller
                 'like_model'=>$like_model,
                 'favolite' => $favolite,
             ];
-        return view('sweet_show',$data,['sweet' => $sweet, 'category' => $category, 'avg' => $avg, 'count' => $count]);
+        return view('user/sweets/sweet_show',$data,['sweet' => $sweet, 'category' => $category, 'avg' => $avg, 'count' => $count]);
     }
 
     /**
@@ -115,15 +123,12 @@ class SweetController extends Controller
     }
 
     public function search(Request $request){
-        $count = Notification::aggregate(Auth::user()->id);
+        if(Auth::user()){
+            $count = Notification::aggregate(Auth::user()->id);
+        }else{
+            $count = "";
+        }
         $data = [];
-        // ユーザの投稿の一覧を作成日時の降順で取得
-        //withCount('テーブル名')とすることで、リレーションの数も取得できます。
-        // $sweets = Sweet::withCount('favolits')->get();
-        // dd($sweets);
-        // foreach($sweets as $sweet) {
-        //     $sweet_data[] = $sweet->favolits_count;
-        // }
         $like_model = new Favolite;
 
         $data = [
@@ -132,13 +137,13 @@ class SweetController extends Controller
         if(isset($request['name'])){
             $name = $request['name'];
             $search = Sweet::select('id', 'name', 'path')->where('name', 'like', '%'.$name.'%')->withCount('favolits')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name, 'count' => $count]);
+            return view('user/sweets/search', $data, ['search' => $search, 'name' => $name, 'count' => $count]);
         }
         elseif(isset($request['category'])){
             $id = $request['category'];
             $name = $request['category_name'];
             $search = Sweet::select('id', 'name', 'path')->where('category_id', 'like', '%'.$id.'%')->withCount('favolits')->get();
-            return view('search', $data, ['search' => $search, 'name' => $name, 'id' => $id, 'count' => $count]);
+            return view('user/sweets/search', $data, ['search' => $search, 'name' => $name, 'id' => $id, 'count' => $count]);
         }
     }
 }

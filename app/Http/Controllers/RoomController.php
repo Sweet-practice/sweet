@@ -35,7 +35,7 @@ class RoomController extends Controller
                 $message->save();
             }
         }
-        return view('room', ['messages' => $messages, 'user' => $user, 'count' => $count]);
+        return view('user/rooms/room', ['messages' => $messages, 'user' => $user, 'count' => $count]);
     }
 
     /**
