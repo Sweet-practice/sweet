@@ -20,7 +20,9 @@
       <input type="file" class="form-control row offset-4 col-4 mb-5" name="sub_image[]">
       <input type="file" class="form-control row offset-4 col-4 mb-5" name="sub_image[]">
       <input type="file" class="form-control row offset-4 col-4 mb-5" name="sub_image[]">
-	    <button type="submit" class="btn btn-primary row offset-4 col-4">お菓子追加</button>
+
+      <input type="file" class="form-control row offset-4 col-4 mb-5" name="video">
+	<button type="submit" class="btn btn-primary row offset-4 col-4">お菓子追加</button>
 	</form>
 </div>
 
